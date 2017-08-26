@@ -79,6 +79,16 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AllieEntity\AllieEntity.csproj">
+      <Project>{adc393c1-b137-4dfa-a872-fc2ae8cef10a}</Project>
+      <Name>AllieEntity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AllieService\AllieService.csproj">
+      <Project>{b6fd7b2e-5836-4ace-99d5-6da3faf74d02}</Project>
+      <Name>AllieService</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

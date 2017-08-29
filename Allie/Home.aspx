@@ -11,7 +11,7 @@
         }
     </style>
 </head>
-<body style="width: 460px">
+<body style="width: 460px; height: 196px">
     <form id="form1" runat="server">
         <div>
             <asp:DropDownList ID="AccountsDropDownList" runat="server">
@@ -24,6 +24,8 @@
             </asp:DropDownList>
             <asp:DropDownList ID="BalanceSheetDropDownList" runat="server">
             </asp:DropDownList>
+            <br />
+            <br />
             <br />
         </div>
         <asp:Label ID="CompanyNameLabel" runat="server" Text="CompanyName"></asp:Label>

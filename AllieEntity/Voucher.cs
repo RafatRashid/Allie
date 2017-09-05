@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AllieEntity
 {
-    public class Vouchers
+    public class Voucher
     {
         public int VoucherID { get; set; }
         public float Amount { get; set; }

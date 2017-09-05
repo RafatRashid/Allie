@@ -1,0 +1,24 @@
+﻿@model Allie.Models.LogIn
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Log In</title>
+</head>
+<body>
+    <div align="center">z
+
+        <form action="Index" method="post">
+            @Html.AntiForgeryToken()
+
+            UserMail: <input type="text" name="UserMail" />&nbsp; 
+            <br />
+            Password: <input type="password" name="Password" />&nbsp; 
+            <br />
+            <input type="submit" value="Log In" />
+
+        </form>
+    </div>
+</body>
+</html>

@@ -12,8 +12,8 @@ namespace Allie.Controllers
         {
             base.OnActionExecuting(filterContext);
 
-            if (Session["loggedIn"] == null)
-                Response.Redirect("/Login/Index");
+            //if (Session["loggedIn"] == null)
+            //    Response.Redirect("/Login/Index");
         }
     }
 }

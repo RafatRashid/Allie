@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AllieEntity
 {
-    class Journal
+    public class Journal
     {
         public int JournalId { get; set; }
         public DateTime JournalPeriod { get; set; }

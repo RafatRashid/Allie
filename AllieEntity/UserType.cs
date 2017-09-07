@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AllieEntity
 {
-    class UserType
+    public class UserType
     {
         public int UTypeId { get; set; }
         public string Type { get; set; }

@@ -13,5 +13,6 @@ namespace AllieEntity
         public string Phone { get; set; }
         public string Email { get; set; }
         public int UserType { get; set; }
+        public int CompanyId { get; set; }
     }
 }

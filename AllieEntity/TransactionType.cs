@@ -6,7 +6,7 @@ namespace AllieEntity
 {
     class TransactionType
     {
-        public int TranTypeId { get; set; }
+        public int TTypeId { get; set; }
         public string Type { get; set; }
     }
 }

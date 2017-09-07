@@ -11,8 +11,8 @@ namespace AllieEntity
         public string Location { get; set; }
         public string Phone { get; set; }
         public string Mail { get; set; }
-        public float TotalRevenue { get; set; }
-        public float TotalExpense { get; set; }
-        public float Profit { get; set; }
+        public double TotalRevenue { get; set; }
+        public double TotalExpense { get; set; }
+        public double Profit { get; set; }
     }
 }

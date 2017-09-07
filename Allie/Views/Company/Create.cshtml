@@ -1,0 +1,41 @@
+﻿@model AllieEntity.Company
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+</head>
+<body>
+    
+    <div align="center">
+        @ViewBag.Error
+
+        Company Details:
+        <form action="Create" method="post">
+            <table>
+                <tr>
+                    <td>Company Name:</td>
+                    <td><input type="text" name="CompanyName" /></td>
+                </tr>
+                <tr>
+                    <td>Company Location:</td>
+                    <td><input type="text" name="Location" /></td>
+                </tr>
+                <tr>
+                    <td>Company Phone Number:</td>
+                    <td><input type="text" name="Phone" /></td>
+                </tr>
+                <tr>
+                    <td>Company Mail:</td>
+                    <td><input type="text" name="Mail" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center"><input type="submit" name="Create Company" /></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+</body>
+</html>

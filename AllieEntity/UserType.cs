@@ -6,7 +6,7 @@ namespace AllieEntity
 {
     public class UserType
     {
-        public int UTypeId { get; set; }
+        public int Id { get; set; }
         public string Type { get; set; }
     }
 }

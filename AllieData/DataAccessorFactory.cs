@@ -24,5 +24,15 @@ namespace AllieData
         {
             return new UserDataAccessor(new AllieContext());
         }
+
+        public static IAccountDataAccessor GetAccountAccessor()
+        {
+            return new AccountDataAccessor(new AllieContext());
+        }
+
+        public static IAccountTypeDataAccessor GetAccountTypeAccessor()
+        {
+            return new AccountTypeDataAccessor(new AllieContext());
+        }
     }
 }

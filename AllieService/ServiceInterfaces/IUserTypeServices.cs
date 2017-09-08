@@ -9,6 +9,7 @@ namespace AllieService.ServiceInterfaces
     {
         IEnumerable<UserType> GetAll();
         UserType Get(string type);
+        UserType Get(int id);
         void Insert(UserType uType);
         void Update(UserType uType);
         void Delete(int id);

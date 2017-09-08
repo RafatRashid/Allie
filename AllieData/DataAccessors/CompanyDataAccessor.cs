@@ -25,17 +25,26 @@ namespace AllieData.DataAccessors
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            Company c = context.Companies.SingleOrDefault(x => x.CompanyId == id);
+            context.Companies.Remove(c);
+            context.SaveChanges();
         }
 
         public void Update(Company company)
         {
-            throw new NotImplementedException();
+            Company c = context.Companies.SingleOrDefault(x => x.CompanyId == company.CompanyId);
+
+            c.CompanyName = company.CompanyName;
+            c.Location = company.Location;
+            c.Mail = company.Mail;
+            c.Phone = company.Phone;
+
+            context.SaveChanges();
         }
 
         public Company Get(int id)
         {
-            throw new NotImplementedException();
+            return context.Companies.SingleOrDefault(x => x.CompanyId == id);
         }
 
         public IEnumerable<Company> GetAll()

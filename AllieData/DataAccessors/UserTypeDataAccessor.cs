@@ -18,7 +18,9 @@ namespace AllieData.DataAccessors
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            UserType u = context.UserTypes.SingleOrDefault(x => x.Id == id);
+            context.UserTypes.Remove(u);
+            context.SaveChanges();
         }
 
         public UserType Get(string type)
@@ -26,19 +28,29 @@ namespace AllieData.DataAccessors
             return context.UserTypes.Single(x => x.Type == type);
         }
 
+        public UserType Get(int id)
+        {
+            return context.UserTypes.Single(x => x.Id == id);
+        }
+
         public IEnumerable<UserType> GetAll()
         {
-            throw new NotImplementedException();
+            return context.UserTypes.ToList();
         }
 
         public void Insert(UserType uType)
         {
-            throw new NotImplementedException();
+            context.UserTypes.Add(uType);
+            context.SaveChanges();
         }
 
         public void Update(UserType uType)
         {
-            throw new NotImplementedException();
+            UserType u = context.UserTypes.SingleOrDefault(x => x.Id == uType.Id);
+
+            u.Type = uType.Type;
+
+            context.SaveChanges();
         }
     }
 }

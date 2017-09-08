@@ -16,19 +16,20 @@ namespace AllieService.Services
         {
             this.accessor = accessor;
         }
+        
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            accessor.Delete(id);
         }
 
         public User Get(int id)
         {
-            throw new NotImplementedException();
+            return accessor.Get(id);
         }
 
         public IEnumerable<User> GetAll()
         {
-            throw new NotImplementedException();
+            return accessor.GetAll();
         }
 
         public void Insert(User user)
@@ -38,7 +39,12 @@ namespace AllieService.Services
 
         public void Update(User user)
         {
-            throw new NotImplementedException();
+            accessor.Update(user);
+        }
+
+        public void ChangePassword(int id, string password)
+        {
+            accessor.ChangePassword(id, password);
         }
     }
 }

@@ -16,19 +16,22 @@ namespace AllieData.DataAccessors
         {
             this.context = context;
         }
+        
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            User u = context.Users.SingleOrDefault(x => x.UserId == id);
+            context.Users.Remove(u);
+            context.SaveChanges();
         }
 
         public User Get(int id)
         {
-            throw new NotImplementedException();
+            return context.Users.SingleOrDefault(x => x.UserId == id);
         }
 
         public IEnumerable<User> GetAll()
         {
-            throw new NotImplementedException();
+            return context.Users.ToList();
         }
 
         public void Insert(User user)
@@ -39,7 +42,22 @@ namespace AllieData.DataAccessors
 
         public void Update(User user)
         {
-            throw new NotImplementedException();
+            User u = context.Users.SingleOrDefault(x => x.UserId == user.UserId);
+
+            u.UserName = user.UserName;
+            u.Phone = user.Phone;
+            u.Email = user.Email;
+            u.Address = user.Address;
+
+            context.SaveChanges();
+        }
+
+        public void ChangePassword(int id, string password)
+        {
+            User u = context.Users.SingleOrDefault(x => x.UserId == id);
+            u.Password = password;
+
+            context.SaveChanges();
         }
     }
 }

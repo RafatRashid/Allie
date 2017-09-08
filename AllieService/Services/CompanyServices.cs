@@ -15,14 +15,15 @@ namespace AllieService.Services
             this.accessor = accessor;
         }
 
+
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            accessor.Delete(id);
         }
 
         public Company Get(int id)
         {
-            throw new NotImplementedException();
+            return accessor.Get(id);
         }
 
         public IEnumerable<Company> GetAll()
@@ -37,7 +38,7 @@ namespace AllieService.Services
 
         public void Update(Company company)
         {
-            throw new NotImplementedException();
+            accessor.Update(company);
         }
     }
 }

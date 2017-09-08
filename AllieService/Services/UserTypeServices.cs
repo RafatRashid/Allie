@@ -20,7 +20,7 @@ namespace AllieService.Services
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            accessor.Delete(id);
         }
 
         public UserType Get(string type)
@@ -28,19 +28,24 @@ namespace AllieService.Services
             return accessor.Get(type);
         }
 
+        public UserType Get(int id)
+        {
+            return accessor.Get(id);
+        }
+
         public IEnumerable<UserType> GetAll()
         {
-            throw new NotImplementedException();
+            return accessor.GetAll();
         }
 
         public void Insert(UserType uType)
         {
-            throw new NotImplementedException();
+            accessor.Insert(uType);
         }
 
         public void Update(UserType uType)
         {
-            throw new NotImplementedException();
+            accessor.Update(uType);
         }
     }
 }

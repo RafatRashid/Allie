@@ -18,6 +18,9 @@ namespace Allie.Controllers
             return View();
         }
 
+        /*the following 2 create method displays the form for creating a new company and
+         handling the company data. Post method stores the company in session and passes 
+         to user controller for making owner.*/
         [HttpGet]
         public ActionResult Create()
         {
@@ -28,9 +31,8 @@ namespace Allie.Controllers
         {
             if(ValidateCompany.IsValid(c))
             {
-                ICompanyServices compService = ServiceFactory.GetCompanyServices();
-                compService.Insert(c);
-                return RedirectToAction("Index");
+                Session["Company"] = c;
+                return RedirectToAction("CreateOwner", "User");
             }
             else
             {

@@ -13,6 +13,7 @@
 
         Company Details:
         <form action="Create" method="post">
+            @Html.AntiForgeryToken()
             <table>
                 <tr>
                     <td>Company Name:</td>
@@ -31,7 +32,7 @@
                     <td><input type="text" name="Mail" /></td>
                 </tr>
                 <tr>
-                    <td colspan="2" align="center"><input type="submit" name="Create Company" /></td>
+                    <td colspan="2" align="center"><input type="submit" name="Save Company Details" /></td>
                 </tr>
             </table>
         </form>

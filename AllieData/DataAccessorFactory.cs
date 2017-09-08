@@ -14,5 +14,15 @@ namespace AllieData
         {
             return new CompanyDataAccessor(new AllieContext());
         }
+
+        public static IUserTypeDataAccessor GetUserTypeAccessor()
+        {
+            return new UserTypeDataAccessor(new AllieContext());
+        }
+
+        public static IUserDataAccessor GetUserAccessor()
+        {
+            return new UserDataAccessor(new AllieContext());
+        }
     }
 }

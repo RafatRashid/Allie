@@ -15,5 +15,15 @@ namespace AllieService
         {
             return new CompanyServices(DataAccessorFactory.GetCompanyAccessor());
         }
+
+        public static IUserTypeServices GetUserTypeServices()
+        {
+            return new UserTypeServices(DataAccessorFactory.GetUserTypeAccessor());
+        }
+
+        public static IUserServices GetUserServices()
+        {
+            return new UserServices(DataAccessorFactory.GetUserAccessor());
+        }
     }
 }

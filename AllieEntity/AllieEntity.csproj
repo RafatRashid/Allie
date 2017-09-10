@@ -48,6 +48,7 @@
     <Compile Include="Ledger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Transaction.cs" />
+    <Compile Include="TransactionDetails.cs" />
     <Compile Include="TransactionType.cs" />
     <Compile Include="User.cs" />
     <Compile Include="UserType.cs" />

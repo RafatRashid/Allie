@@ -50,6 +50,7 @@ namespace AllieData.DataAccessors
 
             a.AccountDescription = acc.AccountDescription;
             a.AccountNumber = acc.AccountNumber;
+            a.AccountType = acc.AccountType;
 
             context.SaveChanges();
         }

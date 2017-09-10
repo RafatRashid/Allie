@@ -43,6 +43,7 @@
     <Compile Include="Account.cs" />
     <Compile Include="AccountType.cs" />
     <Compile Include="Company.cs" />
+    <Compile Include="IncomeStatement.cs" />
     <Compile Include="Journal.cs" />
     <Compile Include="Ledger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

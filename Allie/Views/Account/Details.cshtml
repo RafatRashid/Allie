@@ -1,0 +1,66 @@
+﻿@model AllieEntity.Account
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>Account</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.AccountNumber)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.AccountNumber)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.AccountDescription)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.AccountDescription)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Amount)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Amount)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.AccountType)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.AccountType)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.CompanyId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.CompanyId)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

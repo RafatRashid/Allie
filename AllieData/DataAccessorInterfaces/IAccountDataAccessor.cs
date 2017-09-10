@@ -10,6 +10,7 @@ namespace AllieData.DataAccessorInterfaces
     public interface IAccountDataAccessor
     {
         IEnumerable<Account> GetAll();
+        IEnumerable<Account> GetAll(int companyId);
         Account Get(int id);
         IEnumerable<Account> Get(AccountType type);
         void Insert(Account acc);

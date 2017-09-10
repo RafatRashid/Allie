@@ -1,0 +1,81 @@
+﻿@model AllieEntity.Account
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit</title>
+</head>
+<body>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        
+        <div class="form-horizontal">
+            <h4>Edit Account</h4>
+            <hr />
+            @ViewBag.Error
+    
+            <div class="form-group">
+                AccountNumber
+                <div class="col-md-10">
+                    <input type="text" name="AccountNumber" value="@Model.AccountNumber" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                AccountDescription
+                <div class="col-md-10">
+                    <textarea rows="3" cols="40" name="AccountDescription">@Model.AccountDescription</textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                Amount
+                <div class="col-md-10">
+                    <input type="text" name="Amount" value="@Model.Amount" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                AccountType
+                <div class="col-md-10">
+                    <select name="AccountType">
+                        @using AllieEntity
+                        @using AllieService
+                        @{
+                            List<AccountType> list = (List<AccountType>)ServiceFactory.GetAccountTypeServices().GetAll();
+                        }
+                        @foreach (AccountType acc in list)
+                        {
+                            if (Model.AccountType == acc.Id)
+                            {
+                                <option name="@acc.Type" value="@acc.Id" selected>@acc.Type</option>
+                            }
+                            else
+                            {
+                                <option name="@acc.Type" value="@acc.Id">@acc.Type</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+    
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+    
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+</body>
+</html>

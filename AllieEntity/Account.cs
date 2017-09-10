@@ -6,7 +6,7 @@ namespace AllieEntity
 {
     public class Account
     {
-        public int AccountId { get; set; }
+        public int Id { get; set; }
         public string AccountNumber { get; set; }
         public string AccountDescription { get; set; }
         public double Amount { get; set; }

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AllieData.DataAccessorInterfaces
+namespace AllieService.ServiceInterfaces
 {
     public interface IAccountTypeServices
     {

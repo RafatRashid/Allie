@@ -18,14 +18,14 @@ namespace AllieData.DataAccessors
 
         public void Delete(int id)
         {
-            Account acc = context.Accounts.SingleOrDefault(x => x.AccountId == id);
+            Account acc = context.Accounts.SingleOrDefault(x => x.Id == id);
             context.Accounts.Remove(acc);
             context.SaveChanges();
         }
 
         public Account Get(int id)
         {
-            return context.Accounts.SingleOrDefault(x => x.AccountId == id);
+            return context.Accounts.SingleOrDefault(x => x.Id == id);
         }
 
         public IEnumerable<Account> Get(AccountType type)
@@ -46,7 +46,7 @@ namespace AllieData.DataAccessors
 
         public void Update(Account acc)
         {
-            Account a = context.Accounts.SingleOrDefault(x => x.AccountId == acc.AccountId);
+            Account a = context.Accounts.SingleOrDefault(x => x.Id == acc.Id);
 
             a.AccountDescription = acc.AccountDescription;
             a.AccountNumber = acc.AccountNumber;
@@ -55,12 +55,12 @@ namespace AllieData.DataAccessors
         }
         public void CashIn(int id, double amount)
         {
-            context.Accounts.SingleOrDefault(x => x.AccountId == id).Amount += amount;
+            context.Accounts.SingleOrDefault(x => x.Id == id).Amount += amount;
         }
 
         public bool CashOut(int id, double amount)
         {
-            Account acc = context.Accounts.SingleOrDefault(x => x.AccountId == id);
+            Account acc = context.Accounts.SingleOrDefault(x => x.Id == id);
             if (acc.Amount - amount > 0)
             { 
                 acc.Amount -= amount;
@@ -70,5 +70,9 @@ namespace AllieData.DataAccessors
                 return false;
         }
 
+        public IEnumerable<Account> GetAll(int companyId)
+        {
+            return context.Accounts.Where(x => x.CompanyId == companyId).ToList();
+        }
     }
 }

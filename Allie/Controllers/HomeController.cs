@@ -60,10 +60,10 @@ namespace Allie.Controllers
                 u.UserType = ServiceFactory.GetUserTypeServices().Get("Owner").Id;
                 Company c = (Company)Session["Company"];
                 ServiceFactory.GetCompanyServices().Insert(c);
-                u.CompanyId = c.CompanyId;
+                u.CompanyId = c.Id;
 
                 ServiceFactory.GetUserServices().Insert(u);
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Company");
             }
             else
             {

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AllieEntity;
+using AllieService.ServiceInterfaces;
 
 namespace AllieService.Services
 {
@@ -44,6 +45,11 @@ namespace AllieService.Services
         public IEnumerable<Account> GetAll()
         {
             return accessor.GetAll();
+        }
+
+        public IEnumerable<Account> GetAll(int companyId)
+        {
+            return accessor.GetAll(companyId);
         }
 
         public void Insert(Account acc)

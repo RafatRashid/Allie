@@ -6,7 +6,7 @@ namespace AllieEntity
 {
     public class Company
     {
-        public int CompanyId { get; set; }
+        public int Id { get; set; }
         public string CompanyName { get; set; }
         public string Location { get; set; }
         public string Phone { get; set; }

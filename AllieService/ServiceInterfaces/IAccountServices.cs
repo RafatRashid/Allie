@@ -5,11 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AllieData.DataAccessorInterfaces
+namespace AllieService.ServiceInterfaces
 {
     public interface IAccountServices
     {
         IEnumerable<Account> GetAll();
+        IEnumerable<Account> GetAll(int companyId);
         Account Get(int id);
         IEnumerable<Account> Get(AccountType type);
         void Insert(Account acc);

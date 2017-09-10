@@ -25,14 +25,14 @@ namespace AllieData.DataAccessors
 
         public void Delete(int id)
         {
-            Company c = context.Companies.SingleOrDefault(x => x.CompanyId == id);
+            Company c = context.Companies.SingleOrDefault(x => x.Id == id);
             context.Companies.Remove(c);
             context.SaveChanges();
         }
 
         public void Update(Company company)
         {
-            Company c = context.Companies.SingleOrDefault(x => x.CompanyId == company.CompanyId);
+            Company c = context.Companies.SingleOrDefault(x => x.Id == company.Id);
 
             c.CompanyName = company.CompanyName;
             c.Location = company.Location;
@@ -44,7 +44,7 @@ namespace AllieData.DataAccessors
 
         public Company Get(int id)
         {
-            return context.Companies.SingleOrDefault(x => x.CompanyId == id);
+            return context.Companies.SingleOrDefault(x => x.Id == id);
         }
 
         public IEnumerable<Company> GetAll()

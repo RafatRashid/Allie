@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AllieEntity
 {
-    public class TransactionDetails
+    public class TransactionDetail
     {
         public int Id { get; set; }
         public int TransactionId { get; set; }

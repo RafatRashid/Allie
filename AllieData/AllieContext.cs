@@ -18,5 +18,8 @@ namespace AllieData
         public DbSet<TransactionType> TransactionTypes { get; set; }
         public DbSet<Journal> Journals { get; set; }
         public DbSet<Ledger> Ledgers { get; set; }
+        public DbSet<IncomeStatement> IncomeStatements { get; set; }
+        public DbSet<Voucher> Vouchers { get; set; }
+        public DbSet<TransactionDetail> TransactionDetails { get; set; }
     }
 }

@@ -44,12 +44,18 @@
     <Compile Include="ServiceFactory.cs" />
     <Compile Include="ServiceInterfaces\IAccountServices.cs" />
     <Compile Include="ServiceInterfaces\IAccountTypeServices.cs" />
+    <Compile Include="ServiceInterfaces\ITransactionServices.cs" />
+    <Compile Include="ServiceInterfaces\ITransactionDetailServices.cs" />
+    <Compile Include="ServiceInterfaces\ITransactionTypeServices.cs" />
     <Compile Include="ServiceInterfaces\IUserServices.cs" />
     <Compile Include="ServiceInterfaces\IUserTypeServices.cs" />
     <Compile Include="ServiceInterfaces\ICompanyServices.cs" />
     <Compile Include="Services\AccountServices.cs" />
     <Compile Include="Services\AccountTypeServices.cs" />
     <Compile Include="Services\CompanyServices.cs" />
+    <Compile Include="Services\TransactionDetailServices.cs" />
+    <Compile Include="Services\TransactionServices.cs" />
+    <Compile Include="Services\TransactionTypeServices.cs" />
     <Compile Include="Services\UserServices.cs" />
     <Compile Include="Services\UserTypeServices.cs" />
   </ItemGroup>

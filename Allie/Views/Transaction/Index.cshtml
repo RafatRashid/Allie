@@ -1,0 +1,41 @@
+﻿@model IEnumerable<AllieEntity.Transaction>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div align="center">
+        <h2>Company Transactions</h2>
+
+        <table class="table">
+            @using AllieEntity
+            @foreach (Transaction item in Model)
+            {
+                <tr>
+                    <td align="left">
+                        Transaction Date:  &nbsp; @item.TransactionDate.ToShortDateString()<br/>
+                        Transaction Description:  &nbsp; @item.TransactionDescription<br />
+                        Transaction Amount:  &nbsp; @item.TransactionAmount
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("See Details", "Details", new { id = item.Id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    </td>
+                </tr>
+                <tr><td colspan="2"><hr /></td></tr>
+            }
+        </table>
+        <a href="/Transaction/Create">Begin New Transaction</a>
+        <a href="/Company/Index">Company Dashboard</a>
+    </div>
+</body>
+</html>

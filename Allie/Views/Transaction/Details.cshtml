@@ -1,0 +1,75 @@
+﻿@model IEnumerable<AllieEntity.TransactionDetail>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div align="center">
+        <h2>Transaction Details</h2>
+        <hr />
+        <dl class="dl-horizontal">
+            @using AllieService
+            @using AllieEntity
+            @{ 
+                Transaction transaction = (Transaction)ViewBag.Transaction;
+            }
+
+            <dt>
+                Transaction Date
+            </dt>
+    
+            <dd>
+                @transaction.TransactionDate.ToShortDateString()
+            </dd>
+    
+            <dt>
+                Transaction Description
+            </dt>
+    
+            <dd>
+                @transaction.TransactionDescription
+            </dd>
+    
+            <dt>
+                Total transacted amount
+            </dt>
+    
+            <dd>
+                @transaction.TransactionAmount
+            </dd>    
+        </dl>
+        <h4>Concerned Accounts:</h4>
+        <table width="25%">
+            @foreach (TransactionDetail item in Model)
+            {
+                <tr>
+                    <td>Account Description</td>
+                    <td>@ServiceFactory.GetAccountServices().Get(item.AccountId).AccountDescription</td>
+                </tr>
+                <tr>
+                    <td>Transaction Type</td>
+                    <td>@ServiceFactory.GetTransactionTypeServices().Get(item.TransactionType).Type</td>
+                </tr>
+                <tr>
+                    <td>Transacted Amount</td>
+                    <td>@item.Amount</td>
+                </tr>
+                <tr><td colspan="2"><hr /></td></tr>
+            }
+        </table>
+        @Html.ActionLink("Back to List", "Index") |
+        @Html.ActionLink("Make another transaction", "AddTransaction", new { id=transaction.Id} )
+    </div>
+    <p>
+        
+    </p>
+</body>
+</html>

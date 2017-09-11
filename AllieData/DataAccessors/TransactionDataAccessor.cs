@@ -32,7 +32,12 @@ namespace AllieData.DataAccessors
         {
             return context.Transactions.ToList();
         }
-        
+
+        public IEnumerable<Transaction> GetAll(int companyId)
+        {
+            return context.Transactions.Where(x => x.CompanyId == companyId).ToList();
+        }
+
         public void Insert(Transaction tran)
         {
             context.Transactions.Add(tran);

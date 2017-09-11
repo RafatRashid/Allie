@@ -12,6 +12,7 @@ namespace AllieService.ServiceInterfaces
         IEnumerable<TransactionType> GetAll();
         TransactionType Get(int id);
         TransactionType Get(string type);
+        TransactionType Get(int accId, bool isSource);
         void Insert(TransactionType tType);
         void Update(TransactionType tType);
         void Delete(int id);

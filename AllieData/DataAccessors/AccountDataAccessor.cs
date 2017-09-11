@@ -51,12 +51,14 @@ namespace AllieData.DataAccessors
             a.AccountDescription = acc.AccountDescription;
             a.AccountNumber = acc.AccountNumber;
             a.AccountType = acc.AccountType;
+            a.Amount = acc.Amount;
 
             context.SaveChanges();
         }
         public void CashIn(int id, double amount)
         {
             context.Accounts.SingleOrDefault(x => x.Id == id).Amount += amount;
+            context.SaveChanges();
         }
 
         public bool CashOut(int id, double amount)
@@ -65,10 +67,12 @@ namespace AllieData.DataAccessors
             if (acc.Amount - amount > 0)
             { 
                 acc.Amount -= amount;
+                context.SaveChanges();
                 return true;
             }
             else
                 return false;
+            
         }
 
         public IEnumerable<Account> GetAll(int companyId)

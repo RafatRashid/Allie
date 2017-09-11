@@ -17,7 +17,7 @@ namespace Allie.Controllers
         {
             return View(ServiceFactory.GetAccountServices().GetAll((int)Session["CompanyId"]));
         }
-
+        
         [HttpGet]
         public ActionResult Create()
         {
@@ -78,5 +78,12 @@ namespace Allie.Controllers
         {
             return View(ServiceFactory.GetAccountServices().Get(id));
         }
+
+        [HttpPost]
+        public double GetAccountBalance(int accId)
+        {
+            return ServiceFactory.GetAccountServices().Get(accId).Amount;
+        }
+        
     }
 }

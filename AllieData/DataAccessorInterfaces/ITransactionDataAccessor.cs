@@ -10,6 +10,7 @@ namespace AllieData.DataAccessorInterfaces
     public interface ITransactionDataAccessor
     {
         IEnumerable<Transaction> GetAll();
+        IEnumerable<Transaction> GetAll(int companyId);
         Transaction Get(int id);
         void Insert(Transaction tran);
         void Update(Transaction tran);

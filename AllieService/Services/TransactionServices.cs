@@ -32,6 +32,11 @@ namespace AllieService.Services
             return accessor.GetAll();
         }
 
+        public IEnumerable<Transaction> GetAll(int companyId)
+        {
+            return accessor.GetAll(companyId);
+        }
+
         public void Insert(Transaction tran)
         {
             accessor.Insert(tran);

@@ -10,6 +10,7 @@ namespace AllieEntity
         public string TransactionDescription { get; set; }
         public double TransactionAmount { get; set; }
         public DateTime TransactionDate { get; set; }
+        public int CompanyId { get; set; }
         public int JournalId { get; set; }
     }
 }

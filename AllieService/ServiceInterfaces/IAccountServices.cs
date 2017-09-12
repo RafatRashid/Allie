@@ -12,11 +12,12 @@ namespace AllieService.ServiceInterfaces
         IEnumerable<Account> GetAll();
         IEnumerable<Account> GetAll(int companyId);
         Account Get(int id);
+        string GetRollBackAction(int accId, string tranType);
         IEnumerable<Account> Get(AccountType type);
         void Insert(Account acc);
         void Update(Account acc);
         void Delete(int id);
         void CashIn(int id, double amount);
-        bool CashOut(int id, double amount);
+        void CashOut(int id, double amount);
     }
 }

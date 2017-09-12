@@ -1,6 +1,8 @@
 ﻿using Allie.Models;
+using Allie.ValidationClasses;
 using AllieEntity;
 using AllieService;
+using AllieService.ServiceInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -147,6 +149,85 @@ namespace Allie.Controllers
             ServiceFactory.GetAccountServices().CashIn(destDetail.AccountId, destDetail.Amount);
             
             return RedirectToAction("Details", new { id = transaction.Id});
+        }
+
+        [HttpGet]
+        public ActionResult Delete(int id)
+        {
+            Transaction t = ServiceFactory.GetTransactionServices().Get(id);
+            ViewBag.Transaction = t;
+            return View(ServiceFactory.GetTransactionDetailServices().GetAll(t.Id));
+        }
+
+        [HttpGet]
+        public ActionResult DeleteWithRollBack(int id)
+        {
+            Transaction transaction = ServiceFactory.GetTransactionServices().Get(id);
+
+            IAccountServices accService = ServiceFactory.GetAccountServices();
+            ITransactionTypeServices tTypeService = ServiceFactory.GetTransactionTypeServices();
+            ITransactionDetailServices detailService = ServiceFactory.GetTransactionDetailServices();
+
+            List<TransactionDetail> detail = (List<TransactionDetail>)detailService.GetAll(transaction.Id);
+            List<Account> accList = new List<Account>();
+            foreach (TransactionDetail d in detail)
+            {
+                Account acc = accService.Get(d.AccountId);
+                TransactionType type = tTypeService.Get(d.TransactionType);
+                string action = accService.GetRollBackAction(acc.Id, type.Type);
+
+                if (action == "Increase")
+                    acc.Amount += d.Amount;
+                else
+                    acc.Amount -= d.Amount;
+                accService.Update(acc);
+                accList.Add(acc);
+                detailService.Delete(d.Id);
+            }
+            ServiceFactory.GetTransactionServices().Delete(transaction.Id);
+            ViewBag.AccountList = accList;
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult DeleteWithoutRollBack(int id)
+        {
+            ITransactionServices transactionService = ServiceFactory.GetTransactionServices();
+            ITransactionDetailServices detailService = ServiceFactory.GetTransactionDetailServices();
+
+            Transaction t = transactionService.Get(id);
+            List<TransactionDetail> detail = (List<TransactionDetail>)detailService.GetAll(t.Id);
+
+            foreach (TransactionDetail d in detail)
+                detailService.Delete(d.Id);
+
+            transactionService.Delete(t.Id);
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            return View(ServiceFactory.GetTransactionServices().Get(id));
+        }
+        [HttpPost]
+        public ActionResult Edit(Transaction transaction)
+        {
+            Transaction previous = ServiceFactory.GetTransactionServices().Get(transaction.Id);
+            transaction.CompanyId = previous.CompanyId;
+            transaction.JournalId = previous.JournalId;
+            transaction.TransactionAmount = previous.TransactionAmount;
+
+            if (ValidateTransaction.IsValid(transaction))
+            {
+                ServiceFactory.GetTransactionServices().Update(transaction);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                ViewBag.Error = ValidateTransaction.Message;
+                return View();
+            }
         }
     }
 }

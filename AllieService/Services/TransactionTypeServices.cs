@@ -73,7 +73,7 @@ namespace AllieService.Services
             switch (accType)
             {
                 case "Cash":
-                    return "Debit";
+                    return debit;
                 case "Capital":
                     return credit;
                 case "Expense":
@@ -94,7 +94,7 @@ namespace AllieService.Services
             switch (accType)
             {
                 case "Cash":
-                    return "Credit";
+                    return credit;
                 case "Capital":
                     return debit;
                 case "Expense":

@@ -22,9 +22,9 @@ namespace AllieService.Services
             accessor.CashIn(id, amount);
         }
 
-        public bool CashOut(int id, double amount)
+        public void CashOut(int id, double amount)
         {
-            return accessor.CashOut(id, amount);
+            accessor.CashOut(id, amount);
         }
 
         public void Delete(int id)
@@ -50,6 +50,63 @@ namespace AllieService.Services
         public IEnumerable<Account> GetAll(int companyId)
         {
             return accessor.GetAll(companyId);
+        }
+
+        public string GetRollBackAction(int accId, string tranType)
+        {
+            Account acc = this.Get(accId);
+            string accType = ServiceFactory.GetAccountTypeServices().Get(acc.AccountType).Type;
+            
+            if (tranType == "Credit")
+            {
+                return GetAction_Credit(accType);
+            }
+            else
+                return GetAction_Debit(accType);
+        }
+
+        private string GetAction_Debit(string accType)
+        {
+            const string increase = "Increase";
+            const string decrease = "Decrease";
+            switch (accType)
+            {
+                case "Cash":
+                    return decrease;
+                case "Capital":
+                    return increase;
+                case "Expense":
+                    return decrease;
+                case "Income":
+                    return increase;
+                case "Liability":
+                    return increase;
+                case "Asset":
+                    return decrease;
+            }
+            return null;
+        }
+
+        private string GetAction_Credit(string accType)
+        {
+            const string increase = "Increase";
+            const string decrease = "Decrease";
+            switch (accType)
+            {
+                case "Cash":
+                    return increase;
+                case "Capital":
+                    return decrease;
+                case "Expense":
+                    return increase;
+                case "Income":
+                    return decrease;
+                case "Liability":
+                    return decrease;
+                case "Asset":
+                    return increase;
+            }
+            return null;
         }
 
         public void Insert(Account acc)

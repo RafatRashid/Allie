@@ -17,6 +17,6 @@ namespace AllieData.DataAccessorInterfaces
         void Update(Account acc);
         void Delete(int id);
         void CashIn(int id, double amount);
-        bool CashOut(int id, double amount);
+        void CashOut(int id, double amount);
     }
 }

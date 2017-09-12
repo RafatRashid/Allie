@@ -1,0 +1,31 @@
+﻿@using AllieEntity
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>DeleteWithRollBack</title>
+</head>
+<body>
+    <div align="center">
+        Transaction Deleted with the following accounts rolled back:
+        <table>
+            @foreach (Account acc in ViewBag.AccountList)
+            {
+                <tr>
+                    <td>Account Desctiption:</td>
+                    <td><label>@acc.AccountDescription</label></td>
+
+                    <td>Amount after rollback:</td>
+                    <td><label>@acc.Amount</label></td>
+                </tr>
+            }
+        </table>
+        <a href="/Company/Index">Back to dashboard</a>
+    </div>
+</body>
+</html>

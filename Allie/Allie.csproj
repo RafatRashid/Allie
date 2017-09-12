@@ -116,6 +116,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValidationClasses\ValidateAccount.cs" />
     <Compile Include="ValidationClasses\ValidateCompany.cs" />
+    <Compile Include="ValidationClasses\ValidateTransaction.cs" />
     <Compile Include="ValidationClasses\ValidateUser.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -135,6 +136,10 @@
     <Content Include="Views\Transaction\Index.cshtml" />
     <Content Include="Views\Transaction\Details.cshtml" />
     <Content Include="Views\Transaction\AddTransaction.cshtml" />
+    <Content Include="Views\Transaction\Delete.cshtml" />
+    <Content Include="Views\Transaction\DeleteWithRollBack.cshtml" />
+    <Content Include="Views\Transaction\DeleteWithoutRollBack.cshtml" />
+    <Content Include="Views\Transaction\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

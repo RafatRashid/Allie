@@ -34,18 +34,25 @@ namespace AllieData.DataAccessors
             return Context.Journals.ToList();
         }
 
+        public IEnumerable<Journal> GetAll(int companyId)
+        {
+            return Context.Journals.Where(x => x.CompanyId == companyId).ToList();
+        }
+
         public bool Insert(Journal journal)
         {
             Context.Journals.Add(journal);
             Context.SaveChanges();
-            //return Context.Journals.SingleOrDefault(x => x.JournalName == journal.JournalName);
             return true;
         }
 
         public bool Update(Journal journal)
         {
-            this.Delete(journal.Id);
-            this.Insert(journal);
+            Journal j = Context.Journals.SingleOrDefault(x => x.Id == journal.Id);
+
+            j.JournalDescription = journal.JournalDescription;
+            j.LedgerId = journal.LedgerId;
+
             Context.SaveChanges();
             return true;
         }

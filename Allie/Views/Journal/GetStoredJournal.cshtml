@@ -1,0 +1,106 @@
+﻿@model AllieEntity.Journal
+@using AllieEntity
+@using AllieService
+@using AllieService.ServiceInterfaces
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="~/Scripts/GetStoredJournalScripts.js"></script>
+    <title>Journal</title>
+</head>
+<body>
+    @{
+
+        string month = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.MonthNames[Model.JournalPeriod.Month - 1];
+    }
+    <div align="center" id="inputdiv"> 
+        <label>The journal for the month of @month  @Model.JournalPeriod.Year already exists.</label>
+        <button id="view">View Journal</button>
+    </div>
+
+    <div id="outputdiv" align="center" hidden>
+        @{ 
+            IAccountServices accServ = ServiceFactory.GetAccountServices();
+            ITransactionTypeServices ttypeServ = ServiceFactory.GetTransactionTypeServices();
+            ITransactionDetailServices detailServ = ServiceFactory.GetTransactionDetailServices();
+            ITransactionServices transactionServ = ServiceFactory.GetTransactionServices();
+            
+            List<Transaction> transactionList = (List<Transaction>)transactionServ.GetByJournal(Model.Id);
+        }
+
+        <h2>Monthly Journal For the Month of @month @Model.JournalPeriod.Year</h2>
+        <table>
+            <tr>
+                <td>Journal Description</td>
+                <td><label>@Model.JournalDescription</label></td>
+            </tr>
+        </table>
+        <br /><hr />
+        <table border="1" width="50%">
+            <tr>
+                <th>Date</th>
+                <th>Account Descriptions</th>
+                <th></th>
+                <th>Debits</th>
+                <th>Credits</th>
+            </tr>
+
+            @foreach (Transaction t in transactionList)
+            {
+                List<TransactionDetail> detail = (List<TransactionDetail>)detailServ.GetAll(t.Id);
+                int i = 0;
+                foreach (TransactionDetail d in detail)
+                {
+                    <tr>
+                        @if (i == 0)
+                        {
+                            <td>@t.TransactionDate.ToShortDateString()</td>
+                            i++;
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
+                        <td>
+                            @{
+                                string desc = accServ.Get(d.AccountId).AccountDescription;
+                            }
+                            @desc
+                        </td>
+                        <td></td>
+                        @{
+                            string type = ttypeServ.Get(d.TransactionType).Type;
+                            if (type == "Debit")
+                            {
+                                <td>@d.Amount</td>
+                                    <td></td>
+                            }
+                            else
+                            {
+                                <td></td>
+                                    <td>@d.Amount</td>
+                            }
+                        }
+                    </tr>
+                }
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                }
+        </table>
+        <a href="/Company/Index">To Dashboard</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+﻿@model AllieEntity.Journal
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit Journal</title>
+</head>
+<body>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div align="center">
+            @ViewBag.error
+            <table>
+                <tr>
+                    <td>Journal Description</td>
+                    <td><textarea cols="50" rows="2" name="JournalDescription">@Model.JournalDescription</textarea></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center"><input type="submit" value="Save changes" /></td>
+                </tr>
+            </table>
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</body>
+</html>

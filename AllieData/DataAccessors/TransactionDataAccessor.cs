@@ -47,6 +47,11 @@ namespace AllieData.DataAccessors
                 .ToList();
         }
 
+        public IEnumerable<Transaction> GetByJournal(int journalId)
+        {
+            return context.Transactions.Where(x => x.JournalId == journalId).ToList();
+        }
+
         public void Insert(Transaction tran)
         {
             context.Transactions.Add(tran);

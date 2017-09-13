@@ -15,42 +15,43 @@
     <title>Generate Journal</title>
 </head>
 <body>
-    @{ 
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
         Journal journal = (Journal)Session["Journal"];
-        string month = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.MonthNames[journal.JournalPeriod.Month];
-    }
-    <div align="center"> 
-        <h2>Monthly Journal For the Month of @month @journal.JournalPeriod.ToShortDateString()</h2>
-        <table>
-            <tr>
-                <td>Journal Description</td>
-                <td><textarea cols="50" rows="2" name="Description">@journal.JournalDescription</textarea></td>
-            </tr>
-        </table>
-        @{ 
-            List<TransactionDetail> detailList = new List<TransactionDetail>();
-            List<Transaction> transactionList = (List<Transaction>)ViewBag.TransactionList;
-            IAccountServices accServ = ServiceFactory.GetAccountServices();
-            ITransactionTypeServices tServ = ServiceFactory.GetTransactionTypeServices();
-            ITransactionDetailServices detailServ = ServiceFactory.GetTransactionDetailServices();
-        }
-        <br/><hr />
-        <table border="1" width="50%">
-            <tr>
-                <th>Date</th>
-                <th>Account Descriptions</th>
-                <th></th>
-                <th>Debits</th>
-                <th>Credits</th>
-            </tr>
+        string month = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.MonthNames[journal.JournalPeriod.Month-1];
+        
+        <div align="center">
+            <h2>Monthly Journal For the Month of @month @journal.JournalPeriod.Year</h2>
+            <table>
+                <tr>
+                    <td>Journal Description</td>
+                    <td><textarea cols="50" rows="2" name="Description">@journal.JournalDescription</textarea></td>
+                </tr>
+            </table>
+            @{
+                List<Transaction> transactionList = (List<Transaction>)Session["TransactionList"];
+                IAccountServices accServ = ServiceFactory.GetAccountServices();
+                ITransactionTypeServices tServ = ServiceFactory.GetTransactionTypeServices();
+                ITransactionDetailServices detailServ = ServiceFactory.GetTransactionDetailServices();
+            }
+            <br /><hr />
+            <table border="1" width="50%">
+                <tr>
+                    <th>Date</th>
+                    <th>Account Descriptions</th>
+                    <th></th>
+                    <th>Debits</th>
+                    <th>Credits</th>
+                </tr>
 
-            @foreach (Transaction t in transactionList)
-            {
-                List<TransactionDetail> detail = (List<TransactionDetail>)detailServ.GetAll(t.Id);
-                int i = 0;
-                foreach (TransactionDetail d in detail)
+                @foreach (Transaction t in transactionList)
                 {
-                    <tr>
+                    List<TransactionDetail> detail = (List<TransactionDetail>)detailServ.GetAll(t.Id);
+                    int i = 0;
+                    foreach (TransactionDetail d in detail)
+                    {
+                        <tr>
                             @if (i == 0)
                             {
                                 <td>@t.TransactionDate.ToShortDateString()</td>
@@ -80,17 +81,20 @@
                                     <td>@d.Amount</td>
                                 }
                             }
-                    </tr>
-                }
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            }
-        </table>
-    </div>
+                        </tr>
+                        }
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        }
+            </table>
+            <hr />
+            <input type="submit" value="Save Journal" />
+        </div>
+    }
 </body>
 </html>

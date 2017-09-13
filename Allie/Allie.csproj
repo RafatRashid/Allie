@@ -96,6 +96,7 @@
   <ItemGroup>
     <Content Include="Global.asax" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="Scripts\GetStoredJournalScripts.js" />
     <Content Include="Scripts\TransactionCreateScripts.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
     <Content Include="Web.config" />
@@ -117,6 +118,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValidationClasses\ValidateAccount.cs" />
     <Compile Include="ValidationClasses\ValidateCompany.cs" />
+    <Compile Include="ValidationClasses\ValidateJournal.cs" />
     <Compile Include="ValidationClasses\ValidateTransaction.cs" />
     <Compile Include="ValidationClasses\ValidateUser.cs" />
   </ItemGroup>
@@ -143,6 +145,11 @@
     <Content Include="Views\Transaction\Edit.cshtml" />
     <Content Include="Views\Journal\Create.cshtml" />
     <Content Include="Views\Journal\GenerateJournal.cshtml" />
+    <Content Include="Views\Journal\GetStoredJournal.cshtml" />
+    <Content Include="Views\Journal\Index.cshtml" />
+    <Content Include="Views\Journal\Edit.cshtml" />
+    <Content Include="Views\Journal\Details.cshtml" />
+    <Content Include="Views\Journal\Delete.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

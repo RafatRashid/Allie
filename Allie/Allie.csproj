@@ -107,7 +107,9 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IncomeStatementController.cs" />
     <Compile Include="Controllers\JournalController.cs" />
+    <Compile Include="Controllers\LedgerController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\TransactionController.cs" />
     <Compile Include="Global.asax.cs">
@@ -150,6 +152,8 @@
     <Content Include="Views\Journal\Edit.cshtml" />
     <Content Include="Views\Journal\Details.cshtml" />
     <Content Include="Views\Journal\Delete.cshtml" />
+    <Content Include="Views\Ledger\Create.cshtml" />
+    <Content Include="Views\Ledger\GenerateLedger.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -160,6 +164,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\IncomeStatement\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AllieEntity\AllieEntity.csproj">

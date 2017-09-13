@@ -7,7 +7,7 @@ namespace AllieEntity
     public class Ledger
     {
         public int Id { get; set; }
-        public string LedgerName { get; set; }
+        public string LedgerDescription { get; set; }
         public DateTime LedgerPeriod{ get; set; }
         public int CompanyId { get; set; }
     }

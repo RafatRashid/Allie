@@ -19,14 +19,14 @@ namespace AllieData.DataAccessors
         
         public void Delete(int id)
         {
-            User u = context.Users.SingleOrDefault(x => x.Id == id);
+            User u = context.Users.SingleOrDefault(x => x.UserId == id);
             context.Users.Remove(u);
             context.SaveChanges();
         }
 
         public User Get(int id)
         {
-            return context.Users.SingleOrDefault(x => x.Id == id);
+            return context.Users.SingleOrDefault(x => x.UserId == id);
         }
 
         public IEnumerable<User> GetAll()
@@ -42,7 +42,7 @@ namespace AllieData.DataAccessors
 
         public void Update(User user)
         {
-            User u = context.Users.SingleOrDefault(x => x.Id == user.Id);
+            User u = context.Users.SingleOrDefault(x => x.UserId == user.UserId);
 
             u.UserName = user.UserName;
             u.Phone = user.Phone;
@@ -54,7 +54,7 @@ namespace AllieData.DataAccessors
 
         public void ChangePassword(int id, string password)
         {
-            User u = context.Users.SingleOrDefault(x => x.Id == id);
+            User u = context.Users.SingleOrDefault(x => x.UserId == id);
             u.Password = password;
 
             context.SaveChanges();

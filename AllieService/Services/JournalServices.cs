@@ -27,6 +27,11 @@ namespace AllieService.Services
             return accessor.Get(id);
         }
 
+        public Journal Get(int companyId, DateTime period)
+        {
+            return accessor.Get(companyId, period);
+        }
+
         public IEnumerable<Journal> GetAll()
         {
             return accessor.GetAll();

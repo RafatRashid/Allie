@@ -16,6 +16,11 @@ namespace AllieData.DataAccessors
             this.context = context;
         }
 
+        public IEnumerable<int> GetDistinctAccount(int journalId)
+        {
+            return context.TransactionDetails.Where(x => x.JournalId == journalId).Select(x => x.AccountId).Distinct().ToList();
+        }
+        
         public void Delete(int id)
         {
             TransactionDetail detail = context.TransactionDetails.SingleOrDefault(x => x.Id == id);
@@ -57,8 +62,19 @@ namespace AllieData.DataAccessors
             a.TransactionType = detail.TransactionType;
             a.Amount = detail.Amount;
             a.AccountId = detail.AccountId;
+            a.JournalId = detail.JournalId;
 
             context.SaveChanges();
+        }
+
+        public IEnumerable<TransactionDetail> GetByAccount_Journal(int journalId, int accountId)
+        {
+            return context.TransactionDetails.Where(x => x.JournalId == journalId && x.AccountId == accountId).ToList();
+        }
+
+        public IEnumerable<TransactionDetail> GetByAccount_Transaction(int transactionId, int accountId, int journalId)
+        {
+            return context.TransactionDetails.Where(x => x.TransactionId == transactionId && x.AccountId == accountId && x.JournalId == journalId).ToList();
         }
     }
 }

@@ -11,7 +11,10 @@ namespace AllieService.ServiceInterfaces
     {
         IEnumerable<TransactionDetail> GetAll();
         IEnumerable<TransactionDetail> GetAll(int transactionId);
+        IEnumerable<TransactionDetail> GetByAccount_Journal(int journalId, int accountId);
+        IEnumerable<TransactionDetail> GetByAccount_Transaction(int transactionId, int accountId, int journalId);
         TransactionDetail Get(int id);
+        IEnumerable<int> GetDistinctAccount(int journalId);
         double GetAmount(int id);
         void Insert(TransactionDetail detail);
         void Update(TransactionDetail detail);

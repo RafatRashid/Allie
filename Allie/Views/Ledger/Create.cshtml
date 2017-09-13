@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
 
@@ -8,10 +7,10 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Generate Ledger</title>
+    <title>Create</title>
 </head>
 <body>
-    <div align="center">
+    <div align-="center"> 
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
@@ -47,9 +46,9 @@
                     </td>
                     <td></td>
                 </tr>
-                <tr><td><input type="submit"  value="Generate Ledger for the selected period" /></td></tr>
+                <tr><td><input type="submit" value="Generate Journal with transactions of the selected month" /></td></tr>
             </table>
-            
+
         }
     </div>
 </body>

@@ -29,6 +29,14 @@ namespace AllieData.DataAccessors
             return Context.Journals.SingleOrDefault(x => x.Id == id);
         }
 
+        public Journal Get(int companyId, DateTime period)
+        {
+            return Context.Journals.SingleOrDefault
+                (x => x.JournalPeriod.Month == period.Month &&
+                x.JournalPeriod.Year == period.Year &&
+                x.CompanyId == companyId);
+        }
+
         public IEnumerable<Journal> GetAll()
         {
             return Context.Journals.ToList();

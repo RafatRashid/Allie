@@ -1,0 +1,57 @@
+﻿@using AllieEntity
+@using AllieService
+@using AllieService.ServiceInterfaces
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>GenerateLedger</title>
+</head>
+<body>
+    <div align="center">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div align="center">
+                @{ 
+                    Ledger led = (Ledger)Session["Ledger"];
+                    Journal jour = (Journal)Session["Journal"];
+                    List<Account> accList = (List<Account>)Session["AccountList"];
+                    string month = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.MonthNames[led.LedgerPeriod.Month - 1];
+                    List<Transaction> tranList = (List<Transaction>)ServiceFactory.GetTransactionServices().GetByJournal(jour.Id);
+
+                    ITransactionDetailServices detailServ = ServiceFactory.GetTransactionDetailServices();
+                }
+                <h3>Ledger based on Journal @jour.JournalDescription</h3><br/>
+                <i>Form month of @month  @led.LedgerPeriod.Year</i><hr/><br/>
+
+                @foreach(Account account in accList)
+                {
+                    <i>Account: @account.AccountDescription</i><br />
+                    <table style="border:1px solid black">
+                        <tr>
+                            <th>Date</th>
+                            <th>Description</th>
+                            <th>Debit</th>
+                            <th>Credit</th>
+                            <th>Balance</th>
+                        </tr>
+                        @foreach(Transaction t in tranList)
+                        {
+                            List<TransactionDetail> detail = (List<TransactionDetail>)detailServ
+                                .GetByAccount_Transaction(t.Id, account.Id, jour.Id);
+                            // work on progress
+                        }
+                    </table>
+                }
+            </div>
+        }
+    </div>
+</body>
+</html>

@@ -13,6 +13,7 @@ namespace AllieData.DataAccessorInterfaces
         IEnumerable<Journal> GetAll();
         IEnumerable<Journal> GetAll(int companyId);
         Journal Get(int id);
+        Journal Get(int companyId, DateTime period);
         bool Insert(Journal journal);
         bool Update(Journal journal);
         bool Delete(int id);

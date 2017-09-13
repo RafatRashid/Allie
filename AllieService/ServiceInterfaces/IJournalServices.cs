@@ -11,6 +11,7 @@ namespace AllieService.ServiceInterfaces
     {
         IEnumerable<Journal> GetAll();
         Journal Get(int id);
+        Journal Get(int companyId, DateTime period);
         bool Insert(Journal journal);
         bool Update(Journal journal);
         bool Delete(int id);

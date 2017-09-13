@@ -56,11 +56,18 @@ namespace Allie.Controllers
             List<Transaction> transactionList = (List<Transaction>)Session["TransactionList"];
             ServiceFactory.GetJournalServices().Insert(journal);
             ITransactionServices tranService = ServiceFactory.GetTransactionServices();
+            ITransactionDetailServices detailService = ServiceFactory.GetTransactionDetailServices();
 
-            foreach(Transaction t in transactionList)
+            foreach (Transaction t in transactionList)
             {
                 t.JournalId = journal.Id;
                 tranService.Update(t);
+                List<TransactionDetail> detail = (List<TransactionDetail>)detailService.GetAll(t.Id);
+                foreach(TransactionDetail d in detail)
+                {
+                    d.JournalId = t.JournalId;
+                    detailService.Update(d);
+                }
             }
             return RedirectToAction("Index", "Company");
         }

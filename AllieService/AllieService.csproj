@@ -44,20 +44,26 @@
     <Compile Include="ServiceFactory.cs" />
     <Compile Include="ServiceInterfaces\IAccountServices.cs" />
     <Compile Include="ServiceInterfaces\IAccountTypeServices.cs" />
+    <Compile Include="ServiceInterfaces\IJournalServices.cs" />
+    <Compile Include="ServiceInterfaces\ILedgerServices.cs" />
     <Compile Include="ServiceInterfaces\ITransactionServices.cs" />
     <Compile Include="ServiceInterfaces\ITransactionDetailServices.cs" />
     <Compile Include="ServiceInterfaces\ITransactionTypeServices.cs" />
     <Compile Include="ServiceInterfaces\IUserServices.cs" />
     <Compile Include="ServiceInterfaces\IUserTypeServices.cs" />
     <Compile Include="ServiceInterfaces\ICompanyServices.cs" />
+    <Compile Include="ServiceInterfaces\IVoucherServices.cs" />
     <Compile Include="Services\AccountServices.cs" />
     <Compile Include="Services\AccountTypeServices.cs" />
     <Compile Include="Services\CompanyServices.cs" />
+    <Compile Include="Services\JournalServices.cs" />
+    <Compile Include="Services\LedgerServices.cs" />
     <Compile Include="Services\TransactionDetailServices.cs" />
     <Compile Include="Services\TransactionServices.cs" />
     <Compile Include="Services\TransactionTypeServices.cs" />
     <Compile Include="Services\UserServices.cs" />
     <Compile Include="Services\UserTypeServices.cs" />
+    <Compile Include="Services\VoucherServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AllieData\AllieData.csproj">

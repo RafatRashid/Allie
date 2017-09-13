@@ -1,0 +1,96 @@
+﻿@model AllieEntity.TransactionDetail
+@using AllieEntity
+@using AllieService
+@using AllieService.ServiceInterfaces
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Generate Journal</title>
+</head>
+<body>
+    @{ 
+        Journal journal = (Journal)Session["Journal"];
+        string month = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.MonthNames[journal.JournalPeriod.Month];
+    }
+    <div align="center"> 
+        <h2>Monthly Journal For the Month of @month @journal.JournalPeriod.ToShortDateString()</h2>
+        <table>
+            <tr>
+                <td>Journal Description</td>
+                <td><textarea cols="50" rows="2" name="Description">@journal.JournalDescription</textarea></td>
+            </tr>
+        </table>
+        @{ 
+            List<TransactionDetail> detailList = new List<TransactionDetail>();
+            List<Transaction> transactionList = (List<Transaction>)ViewBag.TransactionList;
+            IAccountServices accServ = ServiceFactory.GetAccountServices();
+            ITransactionTypeServices tServ = ServiceFactory.GetTransactionTypeServices();
+            ITransactionDetailServices detailServ = ServiceFactory.GetTransactionDetailServices();
+        }
+        <br/><hr />
+        <table border="1" width="50%">
+            <tr>
+                <th>Date</th>
+                <th>Account Descriptions</th>
+                <th></th>
+                <th>Debits</th>
+                <th>Credits</th>
+            </tr>
+
+            @foreach (Transaction t in transactionList)
+            {
+                List<TransactionDetail> detail = (List<TransactionDetail>)detailServ.GetAll(t.Id);
+                int i = 0;
+                foreach (TransactionDetail d in detail)
+                {
+                    <tr>
+                            @if (i == 0)
+                            {
+                                <td>@t.TransactionDate.ToShortDateString()</td>
+                                i++;
+                            }
+                            else
+                            {
+                                <td></td>
+                            }
+                            <td>
+                                @{
+                                    string desc = accServ.Get(d.AccountId).AccountDescription;
+                                }
+                                @desc
+                            </td>
+                            <td></td>
+                            @{
+                                string type = tServ.Get(d.TransactionType).Type;
+                                if (type == "Debit")
+                                {
+                                    <td>@d.Amount</td>
+                                    <td></td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                    <td>@d.Amount</td>
+                                }
+                            }
+                    </tr>
+                }
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            }
+        </table>
+    </div>
+</body>
+</html>

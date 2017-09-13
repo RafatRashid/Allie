@@ -106,6 +106,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\JournalController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\TransactionController.cs" />
     <Compile Include="Global.asax.cs">
@@ -140,6 +141,8 @@
     <Content Include="Views\Transaction\DeleteWithRollBack.cshtml" />
     <Content Include="Views\Transaction\DeleteWithoutRollBack.cshtml" />
     <Content Include="Views\Transaction\Edit.cshtml" />
+    <Content Include="Views\Journal\Create.cshtml" />
+    <Content Include="Views\Journal\GenerateJournal.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

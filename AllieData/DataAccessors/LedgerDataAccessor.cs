@@ -42,10 +42,8 @@ namespace AllieData.DataAccessors
         public void Update(Ledger ledger)
         {
             Ledger t = context.Ledgers.SingleOrDefault(x => x.Id == ledger.Id);
-
-            t.Id =ledger.Id;
+            
             t.LedgerDescription = ledger.LedgerDescription;
-            t.LedgerPeriod =ledger.LedgerPeriod;
 
             context.SaveChanges();
         }

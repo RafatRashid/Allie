@@ -69,6 +69,9 @@ namespace Allie.Controllers
                     detailService.Update(d);
                 }
             }
+            Session["Journal"] = null;
+            Session["TransactionList"] = null;
+
             return RedirectToAction("Index", "Company");
         }
 

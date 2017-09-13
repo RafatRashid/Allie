@@ -1,4 +1,5 @@
-﻿@using AllieEntity
+﻿@model AllieEntity.Ledger
+@using AllieEntity
 @using AllieService
 @using AllieService.ServiceInterfaces
 @{
@@ -10,34 +11,39 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>GenerateLedger</title>
+    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="~/Scripts/GetStoredJournalScripts.js"></script>
+    <title>GetStoredLedger</title>
 </head>
 <body>
-    <div align="center">
-        @using (Html.BeginForm())
+    @{
+        string month = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.MonthNames[Model.LedgerPeriod.Month -1];
+    }
+    <div align="center" id="inputdiv">
+        <label>The journal for the month of @month  @Model.LedgerPeriod.Year already exists.</label><br/>
+        <button id="view">View Journal</button>
+    </div>
+    
+    <div align="center" id="outputdiv" hidden>
+        @{
+            Ledger led = (Ledger)Session["Ledger"];
+            Journal jour = (Journal)Session["Journal"];
+            List<Account> accList = (List<Account>)Session["AccountList"];
+            
+            List<Transaction> tranList = (List<Transaction>)ServiceFactory.GetTransactionServices().GetByJournal(jour.Id);
+
+            ITransactionDetailServices detailServ = ServiceFactory.GetTransactionDetailServices();
+            ITransactionTypeServices typeServ = ServiceFactory.GetTransactionTypeServices();
+            IAccountServices accServ = ServiceFactory.GetAccountServices();
+        }
+        <h3>Ledger based on Journal @jour.JournalDescription</h3><br />
+        <i>Form month of @month  @led.LedgerPeriod.Year</i><hr /><br />
+        <input type="hidden" name="JournalId" value="@jour.Id" />
+
+        @foreach (Account account in accList)
         {
-            @Html.AntiForgeryToken()
-
-            <div align="center">
-                @{ 
-                    Ledger led = (Ledger)Session["Ledger"];
-                    Journal jour = (Journal)Session["Journal"];
-                    List<Account> accList = (List<Account>)Session["AccountList"];
-                    string month = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.MonthNames[led.LedgerPeriod.Month - 1];
-                    List<Transaction> tranList = (List<Transaction>)ServiceFactory.GetTransactionServices().GetByJournal(jour.Id);
-
-                    ITransactionDetailServices detailServ = ServiceFactory.GetTransactionDetailServices();
-                    ITransactionTypeServices typeServ = ServiceFactory.GetTransactionTypeServices();
-                    IAccountServices accServ = ServiceFactory.GetAccountServices();
-                }
-                <h3>Ledger based on Journal @jour.JournalDescription</h3><br/>
-                <i>Form month of @month  @led.LedgerPeriod.Year</i><hr/><br/>
-                <input type="hidden" name="JournalId" value="@jour.Id" />
-
-                @foreach(Account account in accList)
-                {
-                    double balance = 0;
-                    <i>Account: @account.AccountDescription</i><br />
+            double balance = 0;
+            <i>Account: @account.AccountDescription</i><br />
                     <table border="1">
                         <tr>
                             <th>Date</th>
@@ -46,18 +52,18 @@
                             <th>Credit</th>
                             <th>Balance</th>
                         </tr>
-                        @foreach(Transaction t in tranList)
+                        @foreach (Transaction t in tranList)
                         {
                             List<TransactionDetail> detail = (List<TransactionDetail>)detailServ
                                 .GetByAccount_Transaction(t.Id, account.Id, jour.Id);
-                            foreach(TransactionDetail d in detail)
+                            foreach (TransactionDetail d in detail)
                             {
                                 <tr>
                                     <td>@t.TransactionDate.ToShortDateString()</td>
                                     <td>@t.TransactionDescription</td>
-                                    @{ 
+                                    @{
 
-                                        if(typeServ.Get(d.TransactionType).Type == "Debit")
+                                        if (typeServ.Get(d.TransactionType).Type == "Debit")
                                         {
                                             <td>@d.Amount</td>
                                             <td></td>
@@ -89,18 +95,15 @@
                                         }
                                     }
                                 </tr>
-                            }
-                        }
+                                            }
+                                        }
                     </table>
                     <br /><hr />
-                    
-                }
-                <br /><input type="submit" value="Save Ledger" /><br /><br />
-            </div>
-            
-            }
+
+                                        }
         @Html.ActionLink("Back to List", "Index") |
         @Html.ActionLink("To dashboard", "Index", "Company")
     </div>
+
 </body>
 </html>

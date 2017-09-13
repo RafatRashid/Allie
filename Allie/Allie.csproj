@@ -154,6 +154,8 @@
     <Content Include="Views\Journal\Delete.cshtml" />
     <Content Include="Views\Ledger\Create.cshtml" />
     <Content Include="Views\Ledger\GenerateLedger.cshtml" />
+    <Content Include="Views\Ledger\GetStoredLedger.cshtml" />
+    <Content Include="Views\Ledger\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

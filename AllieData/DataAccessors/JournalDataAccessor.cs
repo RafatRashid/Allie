@@ -47,6 +47,11 @@ namespace AllieData.DataAccessors
             return Context.Journals.Where(x => x.CompanyId == companyId).ToList();
         }
 
+        public Journal GetByLedger(int ledgerId)
+        {
+            return Context.Journals.Where(x => x.LedgerId == ledgerId).SingleOrDefault();
+        }
+
         public bool Insert(Journal journal)
         {
             Context.Journals.Add(journal);

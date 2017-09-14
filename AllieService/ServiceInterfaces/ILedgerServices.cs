@@ -10,7 +10,7 @@ namespace AllieService.ServiceInterfaces
     public interface ILedgerServices
     {
         IEnumerable<Ledger> GetAll();
-        Ledger Get(string type);
+        IEnumerable<Ledger> GetAll(int companyId);
         Ledger Get(int id);
         void Insert(Ledger uType);
         void Update(Ledger uType);

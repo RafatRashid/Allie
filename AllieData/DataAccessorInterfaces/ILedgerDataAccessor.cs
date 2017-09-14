@@ -10,6 +10,7 @@ namespace AllieData.DataAccessorInterfaces
     public interface ILedgerDataAccessor
     {
         IEnumerable<Ledger> GetAll();
+        IEnumerable<Ledger> GetAll(int companyId);
         Ledger Get(int id);
         void Insert(Ledger ledger);
         void Update(Ledger ledger);

@@ -121,6 +121,7 @@
     <Compile Include="ValidationClasses\ValidateAccount.cs" />
     <Compile Include="ValidationClasses\ValidateCompany.cs" />
     <Compile Include="ValidationClasses\ValidateJournal.cs" />
+    <Compile Include="ValidationClasses\ValidateLedger.cs" />
     <Compile Include="ValidationClasses\ValidateTransaction.cs" />
     <Compile Include="ValidationClasses\ValidateUser.cs" />
   </ItemGroup>
@@ -156,6 +157,9 @@
     <Content Include="Views\Ledger\GenerateLedger.cshtml" />
     <Content Include="Views\Ledger\GetStoredLedger.cshtml" />
     <Content Include="Views\Ledger\Index.cshtml" />
+    <Content Include="Views\Ledger\Edit.cshtml" />
+    <Content Include="Views\Ledger\Delete.cshtml" />
+    <Content Include="Views\Ledger\Details.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

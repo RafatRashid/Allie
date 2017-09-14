@@ -12,6 +12,7 @@ namespace AllieService.ServiceInterfaces
         IEnumerable<Journal> GetAll();
         Journal Get(int id);
         Journal Get(int companyId, DateTime period);
+        Journal GetByLedger(int ledgerId);
         bool Insert(Journal journal);
         bool Update(Journal journal);
         bool Delete(int id);

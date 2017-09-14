@@ -1,0 +1,126 @@
+﻿@model AllieEntity.Ledger
+@using AllieEntity
+@using AllieService
+@using AllieService.ServiceInterfaces
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Delete</title>
+</head>
+<body>
+    <h3>Are you sure you want to delete this ledger?</h3>
+    <div align="center">
+        <h4>Ledger</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.LedgerDescription)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.LedgerDescription)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.LedgerPeriod)
+            </dt>
+    
+            <dd>
+                @{string month = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.MonthNames[Model.LedgerPeriod.Month - 1]; }
+                @month  @Model.LedgerPeriod.Year
+            </dd>
+        </dl>
+        <div align="center">
+            @{
+                ITransactionDetailServices detailServ = ServiceFactory.GetTransactionDetailServices();
+                ITransactionTypeServices typeServ = ServiceFactory.GetTransactionTypeServices();
+                IAccountServices accServ = ServiceFactory.GetAccountServices();
+                IJournalServices jourServ = ServiceFactory.GetJournalServices();
+
+                Journal jour = jourServ.GetByLedger(Model.Id);
+                List<Transaction> tranList = (List<Transaction>)ServiceFactory.GetTransactionServices().GetByJournal(jour.Id);
+                List<int> accIdList = (List<int>)ServiceFactory.GetTransactionDetailServices().GetDistinctAccount(jour.Id);
+            }
+            <h3>Ledger based on Journal- @jour.JournalDescription</h3><br />
+            
+            @foreach (int accountId in accIdList)
+            {
+                Account account = accServ.Get(accountId);
+
+                double balance = 0;
+                <i>Account: @account.AccountDescription</i><br />
+                <table border="1">
+                    <tr>
+                        <th>Date</th>
+                        <th>Description</th>
+                        <th>Debit</th>
+                        <th>Credit</th>
+                        <th>Balance</th>
+                    </tr>
+                    @foreach (Transaction t in tranList)
+                {
+                    List<TransactionDetail> detail = (List<TransactionDetail>)detailServ
+                        .GetByAccount_Transaction(t.Id, account.Id, jour.Id);
+                    foreach (TransactionDetail d in detail)
+                    {
+                            <tr>
+                                <td>@t.TransactionDate.ToShortDateString()</td>
+                                <td>@t.TransactionDescription</td>
+                                @{
+
+                                    if (typeServ.Get(d.TransactionType).Type == "Debit")
+                                    {
+                                        <td>@d.Amount</td>
+                                        <td></td>
+                                        string action = accServ.GetRollBackAction(account.Id, "Credit");
+                                        if (action == "Increase")
+                                        {
+                                            balance += d.Amount;
+                                        }
+                                        else
+                                        {
+                                            balance -= d.Amount;
+                                        }
+                                        <td>@balance</td>
+                                    }
+                                    else
+                                    {
+                                        <td></td>
+                                        <td>@d.Amount</td>
+                                        string action = accServ.GetRollBackAction(account.Id, "Debit");
+                                        if (action == "Increase")
+                                        {
+                                            balance += d.Amount;
+                                        }
+                                        else
+                                        {
+                                            balance -= d.Amount;
+                                        }
+                                        <td>@balance</td>
+                                    }
+                                }
+                            </tr>
+                                        }
+                                    }
+                </table>
+                <br /><hr />
+
+                                    }
+        </div>
+        @using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+    
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-default" /> |
+                @Html.ActionLink("Back to List", "Index") | @Html.ActionLink("To dashboard", "Index", "Company")
+            </div>
+        }
+    </div>
+</body>
+</html>

@@ -12,44 +12,41 @@ namespace AllieService.Services
 {
     class LedgerServices : ILedgerServices
     {
-    ILedgerDataAccessor accessor;
-    public LedgerServices(ILedgerDataAccessor accessor)
-    {
-        this.accessor = accessor;
-    }
-
-    public void Delete(int id)
-    {
-        accessor.Delete(id);
-    }
-
-    public Ledger Get(int id)
-    {
-        return accessor.Get(id);
-    }
-
-        public Ledger Get(string type)
+        ILedgerDataAccessor accessor;
+        public LedgerServices(ILedgerDataAccessor accessor)
         {
-            throw new NotImplementedException();
+            this.accessor = accessor;
+        }
+
+        public void Delete(int id)
+        {
+            accessor.Delete(id);
+        }
+
+        public Ledger Get(int id)
+        {
+            return accessor.Get(id);
         }
 
         public IEnumerable<Ledger> GetAll()
-    {
-        return accessor.GetAll();
-    }
+        {
+            return accessor.GetAll();
+        }
 
-    public void Insert(Ledger ledger)
-    {
-        accessor.Insert(ledger);
-    }
+        public IEnumerable<Ledger> GetAll(int companyId)
+        {
+            return accessor.GetAll(companyId);
+        }
 
-
-
+        public void Insert(Ledger ledger)
+        {
+            accessor.Insert(ledger);
+        }
+        
         public void Update(Ledger ledger)
-    {
-        accessor.Update(ledger);
-    }
-
-
+        {
+            accessor.Update(ledger);
+        }
+        
     }
 }

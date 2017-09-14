@@ -1,0 +1,99 @@
+﻿@using AllieEntity
+@using AllieService
+@using AllieService.ServiceInterfaces
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div align="center">
+        @{
+            Ledger led = (Ledger)Session["Ledger"];
+            Journal jour = (Journal)Session["Journal"];
+            List<Account> accList = (List<Account>)Session["AccountList"];
+
+            List<Transaction> tranList = (List<Transaction>)ServiceFactory.GetTransactionServices().GetByJournal(jour.Id);
+            string month = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.MonthNames[led.LedgerPeriod.Month - 1];
+            ITransactionDetailServices detailServ = ServiceFactory.GetTransactionDetailServices();
+            ITransactionTypeServices typeServ = ServiceFactory.GetTransactionTypeServices();
+            IAccountServices accServ = ServiceFactory.GetAccountServices();
+        }
+        <h3>Ledger based on Journal- @jour.JournalDescription</h3><br />
+        <strong>@led.LedgerDescription</strong><br />
+        <i>For month of @month  @led.LedgerPeriod.Year</i><hr /><br />
+        <input type="hidden" name="JournalId" value="@jour.Id" />
+
+        @foreach (Account account in accList)
+        {
+            double balance = 0;
+            <i>Account: @account.AccountDescription</i><br />
+            <table border="1">
+                <tr>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Debit</th>
+                    <th>Credit</th>
+                    <th>Balance</th>
+                </tr>
+                @foreach (Transaction t in tranList)
+                {
+                    List<TransactionDetail> detail = (List<TransactionDetail>)detailServ
+                        .GetByAccount_Transaction(t.Id, account.Id, jour.Id);
+                    foreach (TransactionDetail d in detail)
+                    {
+                        <tr>
+                            <td>@t.TransactionDate.ToShortDateString()</td>
+                            <td>@t.TransactionDescription</td>
+                            @{
+
+                                if (typeServ.Get(d.TransactionType).Type == "Debit")
+                                {
+                                    <td>@d.Amount</td>
+                                            <td></td>
+                                    string action = accServ.GetRollBackAction(account.Id, "Credit");
+                                    if (action == "Increase")
+                                    {
+                                        balance += d.Amount;
+                                    }
+                                    else
+                                    {
+                                        balance -= d.Amount;
+                                    }
+                                    <td>@balance</td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                            <td>@d.Amount</td>
+                                    string action = accServ.GetRollBackAction(account.Id, "Debit");
+                                    if (action == "Increase")
+                                    {
+                                        balance += d.Amount;
+                                    }
+                                    else
+                                    {
+                                        balance -= d.Amount;
+                                    }
+                                    <td>@balance</td>
+                                }
+                            }
+                        </tr>
+                                    }
+                                }
+            </table>
+                    <br /><hr />
+
+                                }
+        @Html.ActionLink("Back to List", "Index") |
+        @Html.ActionLink("To dashboard", "Index", "Company")
+    </div>
+
+</body>
+</html>

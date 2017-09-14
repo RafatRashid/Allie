@@ -33,6 +33,11 @@ namespace AllieData.DataAccessors
             return context.Ledgers.ToList();
         }
 
+        public IEnumerable<Ledger> GetAll(int companyId)
+        {
+            return context.Ledgers.Where(x => x.CompanyId == companyId).ToList();
+        }
+
         public void Insert(Ledger ledger)
         {
             context.Ledgers.Add(ledger);

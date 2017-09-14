@@ -37,6 +37,11 @@ namespace AllieService.Services
             return accessor.GetAll();
         }
 
+        public Journal GetByLedger(int ledgerId)
+        {
+            return accessor.GetByLedger(ledgerId);
+        }
+
         public bool Insert(Journal journal)
         {
             return accessor.Insert(journal);

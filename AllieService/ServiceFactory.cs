@@ -65,5 +65,10 @@ namespace AllieService
         {
             return new VoucherServices(DataAccessorFactory.GetVoucherDataAccessor());
         }
+
+        public static IIncomeStatementServices GetIncomeStatementServices()
+        {
+            return new IncomeStatementServices(DataAccessorFactory.GetIncomeStatementDataAccessor());
+        }
     }
 }

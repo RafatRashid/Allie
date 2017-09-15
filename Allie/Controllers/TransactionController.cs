@@ -22,6 +22,12 @@ namespace Allie.Controllers
         [HttpGet]
         public ActionResult Create()
         {
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult CreateInternal()
+        {
             List<Account> accList = (List<Account>) ServiceFactory.GetAccountServices().GetAll((int)Session["CompanyId"]);
             List<SelectListItem> itemList = new List<SelectListItem>();
 
@@ -47,7 +53,7 @@ namespace Allie.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(FormCollection form)
+        public ActionResult CreateInternal(FormCollection form)
         {
             Transaction transaction = new Transaction();
             TransactionDetail sourceDetail = new TransactionDetail();
@@ -77,6 +83,68 @@ namespace Allie.Controllers
             ServiceFactory.GetAccountServices().CashIn(destDetail.AccountId, destDetail.Amount);
 
             return RedirectToAction("Index", "Company");
+        }
+        
+        [HttpGet]
+        public ActionResult CreateExternal()
+        {
+            List<Account> accList = (List<Account>)ServiceFactory.GetAccountServices().GetAll((int)Session["CompanyId"]);
+            List<SelectListItem> itemList = new List<SelectListItem>();
+
+            foreach (Account acc in accList)
+            {
+                SelectListItem item = new SelectListItem();
+                item.Text = acc.AccountDescription;
+                item.Value = acc.Id.ToString();
+
+                itemList.Add(item);
+            }
+            SelectListItem temp = new SelectListItem()
+            {
+                Text = "none",
+                Value = "none",
+            };
+            temp.Selected = true;
+            itemList.Add(temp);
+
+            ViewBag.SelectList = itemList;
+            ViewBag.AccountList = accList;
+            return View();
+        }
+        [HttpPost]
+        public ActionResult CreateExternal(FormCollection Form)
+        {
+            Transaction transaction = new Transaction();
+            TransactionDetail account1 = new TransactionDetail();
+            TransactionDetail account2 = new TransactionDetail();
+
+            transaction.TransactionAmount = Convert.ToDouble(Form["Amount"]);
+            transaction.TransactionDate = Convert.ToDateTime(Form["TransactionDate"]).Date;
+            transaction.TransactionDescription = Form["Description"];
+            transaction.CompanyId = (int)Session["CompanyId"];
+
+            ServiceFactory.GetTransactionServices().Insert(transaction);
+
+            if(Form["Account_1"] != "none")
+            {
+                account1.AccountId = Convert.ToInt32(Form["Account_1"]);
+                account1.Amount = transaction.TransactionAmount;
+                account1.TransactionId = transaction.Id;
+                account1.TransactionType = ServiceFactory.GetTransactionTypeServices().Get(Form["Account_1_TransactionType"]).Id;
+                ServiceFactory.GetTransactionDetailServices().Insert(account1);
+                ServiceFactory.GetAccountServices().CashIn(account1.AccountId, account1.Amount);
+            }
+            if(Form["Account_2"] != "none")
+            {
+                account2.AccountId = Convert.ToInt32(Form["Account_2"]);
+                account2.Amount = transaction.TransactionAmount;
+                account2.TransactionId = transaction.Id;
+                account2.TransactionType = ServiceFactory.GetTransactionTypeServices().Get(Form["Account_2_TransactionType"]).Id;
+                ServiceFactory.GetTransactionDetailServices().Insert(account2);
+                ServiceFactory.GetAccountServices().CashIn(account2.AccountId, account2.Amount);
+            }
+            
+            return RedirectToAction("Index");
         }
 
         [HttpGet]

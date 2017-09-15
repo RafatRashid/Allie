@@ -27,6 +27,11 @@ namespace AllieData.DataAccessors
             return context.AccountTypes.SingleOrDefault(x => x.Id == id);
         }
 
+        public AccountType Get(string Type)
+        {
+            return context.AccountTypes.SingleOrDefault(x => x.Type == Type);
+        }
+
         public IEnumerable<AccountType> GetAll()
         {
             return context.AccountTypes.ToList();

@@ -11,6 +11,7 @@ namespace AllieData.DataAccessorInterfaces
     {
         IEnumerable<AccountType> GetAll();
         AccountType Get(int id);
+        AccountType Get(string Type);
         void Insert(AccountType accType);
         void Update(AccountType accType);
         void Delete(int id);

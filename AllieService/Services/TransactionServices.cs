@@ -42,6 +42,11 @@ namespace AllieService.Services
             return accessor.GetAll(companyId, period);
         }
 
+        public IEnumerable<Transaction> GetAllByPeriodInterval(int companyId, DateTime startPeriod, DateTime endPeriod)
+        {
+            return accessor.GetAllByPeriodInterval(companyId, startPeriod, endPeriod);
+        }
+
         public IEnumerable<Transaction> GetByJournal(int journalId)
         {
             return accessor.GetByJournal(journalId);

@@ -66,5 +66,15 @@ namespace AllieService.Services
         {
             return accessor.GetByAccount_Transaction(transactionId, accountId, journalId);
         }
+
+        public IEnumerable<TransactionDetail> GetByAccount_IncomeType(int incomeTypeId, int transactionId)
+        {
+            return accessor.GetByAccount_IncomeType(incomeTypeId, transactionId);
+        }
+
+        public IEnumerable<TransactionDetail> GetByAccount_ExpenseType(int expenseTypeId, int transactionId)
+        {
+            return accessor.GetByAccount_ExpenseType(expenseTypeId, transactionId);
+        }
     }
 }

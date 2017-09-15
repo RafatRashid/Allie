@@ -96,6 +96,7 @@
   <ItemGroup>
     <Content Include="Global.asax" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="Scripts\ExternalTransactionScript.js" />
     <Content Include="Scripts\GetStoredJournalScripts.js" />
     <Content Include="Scripts\TransactionCreateScripts.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
@@ -115,6 +116,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\IncomeModel.cs" />
     <Compile Include="Models\LogIn.cs" />
     <Compile Include="Models\TransactionVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -138,7 +140,7 @@
     <Content Include="Views\Account\Edit.cshtml" />
     <Content Include="Views\Account\Delete.cshtml" />
     <Content Include="Views\Account\Details.cshtml" />
-    <Content Include="Views\Transaction\Create.cshtml" />
+    <Content Include="Views\Transaction\CreateInternal.cshtml" />
     <Content Include="Views\Transaction\Index.cshtml" />
     <Content Include="Views\Transaction\Details.cshtml" />
     <Content Include="Views\Transaction\AddTransaction.cshtml" />
@@ -160,6 +162,11 @@
     <Content Include="Views\Ledger\Edit.cshtml" />
     <Content Include="Views\Ledger\Delete.cshtml" />
     <Content Include="Views\Ledger\Details.cshtml" />
+    <Content Include="Views\Transaction\CreateExternal.cshtml" />
+    <Content Include="Views\Transaction\Create.cshtml" />
+    <Content Include="Views\IncomeStatement\Create.cshtml" />
+    <Content Include="Views\IncomeStatement\GenerateIncomeStatement.cshtml" />
+    <Content Include="Views\IncomeStatement\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -170,7 +177,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\IncomeStatement\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AllieEntity\AllieEntity.csproj">

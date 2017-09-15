@@ -47,6 +47,13 @@ namespace AllieData.DataAccessors
                 .ToList();
         }
 
+        public IEnumerable<Transaction> GetAllByPeriodInterval(int companyId, DateTime startPeriod, DateTime endPeriod)
+        {
+            return context.Transactions.Where(x => 
+                        (x.TransactionDate.Month >= startPeriod.Month && x.TransactionDate.Month <= endPeriod.Month) &&
+                        (x.TransactionDate.Year >= startPeriod.Year && x.TransactionDate.Year <= endPeriod.Year)).ToList();
+        }
+
         public IEnumerable<Transaction> GetByJournal(int journalId)
         {
             return context.Transactions.Where(x => x.JournalId == journalId).ToList();

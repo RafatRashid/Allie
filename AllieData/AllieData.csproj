@@ -52,6 +52,7 @@
     <Compile Include="AllieContext.cs" />
     <Compile Include="DataAccessorFactory.cs" />
     <Compile Include="DataAccessorInterfaces\IAccountDataAccessor.cs" />
+    <Compile Include="DataAccessorInterfaces\IIncomeStatementDataAccessor.cs" />
     <Compile Include="DataAccessorInterfaces\IJournalDataAccessor.cs" />
     <Compile Include="DataAccessorInterfaces\ILedgerDataAccessor.cs" />
     <Compile Include="DataAccessorInterfaces\ITransactionDataAccessor.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="DataAccessorInterfaces\IVoucherDataAccessor.cs" />
     <Compile Include="DataAccessors\AccountDataAccessor.cs" />
     <Compile Include="DataAccessors\AccountTypeDataAccessor.cs" />
+    <Compile Include="DataAccessors\IncomeStatementDataAccessor.cs" />
     <Compile Include="DataAccessors\JournalDataAccessor.cs" />
     <Compile Include="DataAccessors\LedgerDataAccessor.cs" />
     <Compile Include="DataAccessors\TransactionDataAccessor.cs" />

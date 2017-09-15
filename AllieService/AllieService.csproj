@@ -44,6 +44,7 @@
     <Compile Include="ServiceFactory.cs" />
     <Compile Include="ServiceInterfaces\IAccountServices.cs" />
     <Compile Include="ServiceInterfaces\IAccountTypeServices.cs" />
+    <Compile Include="ServiceInterfaces\IIncomeStatementServices.cs" />
     <Compile Include="ServiceInterfaces\IJournalServices.cs" />
     <Compile Include="ServiceInterfaces\ILedgerServices.cs" />
     <Compile Include="ServiceInterfaces\ITransactionServices.cs" />
@@ -56,6 +57,7 @@
     <Compile Include="Services\AccountServices.cs" />
     <Compile Include="Services\AccountTypeServices.cs" />
     <Compile Include="Services\CompanyServices.cs" />
+    <Compile Include="Services\IncomeStatementServices.cs" />
     <Compile Include="Services\JournalServices.cs" />
     <Compile Include="Services\LedgerServices.cs" />
     <Compile Include="Services\TransactionDetailServices.cs" />

@@ -76,5 +76,39 @@ namespace AllieData.DataAccessors
         {
             return context.TransactionDetails.Where(x => x.TransactionId == transactionId && x.AccountId == accountId && x.JournalId == journalId).ToList();
         }
+
+        public IEnumerable<TransactionDetail> GetByAccount_IncomeType(int incomeTypeId, int transactionId)
+        {
+            List<TransactionDetail> detailList = new List<TransactionDetail>();
+            List<TransactionDetail> returnList = new List<TransactionDetail>();
+
+            detailList =  context.TransactionDetails.Where(x => x.TransactionId == transactionId).ToList();
+            
+            foreach(TransactionDetail d in detailList)
+            {
+                Account a = context.Accounts.SingleOrDefault(x => (x.AccountType == incomeTypeId) &&
+                                                             x.Id == d.AccountId);
+                if (a != null)
+                    returnList.Add(d);
+            }
+            return returnList;
+        }
+
+        public IEnumerable<TransactionDetail> GetByAccount_ExpenseType(int expenseTypeId, int transactionId)
+        {
+            List<TransactionDetail> detailList = new List<TransactionDetail>();
+            List<TransactionDetail> returnList = new List<TransactionDetail>();
+
+            detailList = context.TransactionDetails.Where(x => x.TransactionId == transactionId).ToList();
+
+            foreach (TransactionDetail d in detailList)
+            {
+                Account a = context.Accounts.SingleOrDefault(x => (x.AccountType == expenseTypeId) &&
+                                                             x.Id == d.AccountId);
+                if (a != null)
+                    returnList.Add(d);
+            }
+            return returnList;
+        }
     }
 }

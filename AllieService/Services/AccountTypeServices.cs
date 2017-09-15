@@ -27,6 +27,11 @@ namespace AllieService.Services
             return accessor.Get(id);
         }
 
+        public AccountType Get(string type)
+        {
+            return accessor.Get(type);
+        }
+
         public IEnumerable<AccountType> GetAll()
         {
             return accessor.GetAll();

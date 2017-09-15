@@ -64,5 +64,10 @@ namespace AllieData
         {
             return new VoucherDataAccessor(new AllieContext());
         }
+
+        public static IIncomeStatementDataAccessor GetIncomeStatementDataAccessor()
+        {
+            return new IncomeStatementDataAccessor(new AllieContext());
+        }
     }
 }

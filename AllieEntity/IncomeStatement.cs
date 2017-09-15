@@ -12,5 +12,7 @@ namespace AllieEntity
         public string Description { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
+        public double Total { get; set; }
+        public int CompanyId { get; set; }
     }
 }

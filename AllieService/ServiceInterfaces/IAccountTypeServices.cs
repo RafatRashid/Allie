@@ -11,6 +11,7 @@ namespace AllieService.ServiceInterfaces
     {
         IEnumerable<AccountType> GetAll();
         AccountType Get(int id);
+        AccountType Get(string type);
         void Insert(AccountType accType);
         void Update(AccountType accType);
         void Delete(int id);

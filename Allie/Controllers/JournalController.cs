@@ -72,7 +72,7 @@ namespace Allie.Controllers
             Session["Journal"] = null;
             Session["TransactionList"] = null;
 
-            return RedirectToAction("Index", "Company");
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -116,6 +116,9 @@ namespace Allie.Controllers
         public ActionResult DeleteConfirm(Journal j)
         {
             ITransactionServices service = ServiceFactory.GetTransactionServices();
+            if(j.LedgerId != 0)
+                ServiceFactory.GetLedgerServices().Delete(j.LedgerId);
+
             List<Transaction> tList = (List<Transaction>)ServiceFactory.GetTransactionServices().GetByJournal(j.Id);
             foreach(Transaction t in tList)
             {

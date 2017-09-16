@@ -143,7 +143,7 @@
     <Content Include="Views\Transaction\CreateInternal.cshtml" />
     <Content Include="Views\Transaction\Index.cshtml" />
     <Content Include="Views\Transaction\Details.cshtml" />
-    <Content Include="Views\Transaction\AddTransaction.cshtml" />
+    <Content Include="Views\Transaction\AddTransactionInternal.cshtml" />
     <Content Include="Views\Transaction\Delete.cshtml" />
     <Content Include="Views\Transaction\DeleteWithRollBack.cshtml" />
     <Content Include="Views\Transaction\DeleteWithoutRollBack.cshtml" />
@@ -167,6 +167,9 @@
     <Content Include="Views\IncomeStatement\Create.cshtml" />
     <Content Include="Views\IncomeStatement\GenerateIncomeStatement.cshtml" />
     <Content Include="Views\IncomeStatement\Index.cshtml" />
+    <Content Include="Views\IncomeStatement\Details.cshtml" />
+    <Content Include="Views\IncomeStatement\Delete.cshtml" />
+    <Content Include="Views\Transaction\AddTransactionExternal.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

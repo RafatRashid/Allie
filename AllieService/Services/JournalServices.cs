@@ -37,6 +37,11 @@ namespace AllieService.Services
             return accessor.GetAll();
         }
 
+        public IEnumerable<Journal> GetAll(int companyId)
+        {
+            return accessor.GetAll(companyId);
+        }
+
         public Journal GetByLedger(int ledgerId)
         {
             return accessor.GetByLedger(ledgerId);

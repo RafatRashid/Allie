@@ -24,16 +24,16 @@ namespace Allie.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Create(FormCollection Form)
+        public ActionResult Create(int id)
         {
-            Ledger led = new Ledger();
-            led.LedgerPeriod = new DateTime(Convert.ToInt32(Form["Year"]), Convert.ToInt32(Form["Month"]) + 1, 1);
-            led.LedgerDescription = Form["Description"];
-            led.CompanyId = Convert.ToInt32(Session["CompanyId"]);
+            Journal journal = ServiceFactory.GetJournalServices().Get(id);
 
-            Journal j = ServiceFactory.GetJournalServices().Get(led.CompanyId, led.LedgerPeriod);
+            Ledger led = new Ledger();
+            led.LedgerPeriod = journal.JournalPeriod;
+            led.CompanyId = Convert.ToInt32(Session["CompanyId"]);
+            
             List<Account> accList = new List<Account>();
-            List<int> idList = (List<int>)ServiceFactory.GetTransactionDetailServices().GetDistinctAccount(j.Id);
+            List<int> idList = (List<int>)ServiceFactory.GetTransactionDetailServices().GetDistinctAccount(journal.Id);
             IAccountServices accService = ServiceFactory.GetAccountServices();
 
             foreach (int i in idList)
@@ -43,12 +43,12 @@ namespace Allie.Controllers
             }
 
             Session["Ledger"] = led;
-            Session["Journal"] = j;
+            Session["Journal"] = journal;
             Session["AccountList"] = accList;
 
-            if (j.LedgerId != 0)
+            if (journal.LedgerId != 0)
             {
-                return RedirectToAction("GetStoredLedger", new { id = j.LedgerId });
+                return RedirectToAction("GetStoredLedger", new { id = journal.LedgerId });
             }
             return RedirectToAction("GenerateLedger");
         }
@@ -63,6 +63,7 @@ namespace Allie.Controllers
         public ActionResult GenerateLedger(FormCollection Form)
         {
             Ledger led = (Ledger)Session["Ledger"];
+            led.LedgerDescription = Form["Description"];
             Journal jour = (Journal)Session["Journal"];
 
             ServiceFactory.GetLedgerServices().Insert(led);

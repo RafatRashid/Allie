@@ -81,7 +81,7 @@ namespace AllieService.Services
                 case "Income":
                     return credit;
                 case "Liability":
-                    return credit;
+                    return debit;
                 case "Asset":
                     return debit;
             }
@@ -102,7 +102,7 @@ namespace AllieService.Services
                 case "Income":
                     return debit;
                 case "Liability":
-                    return debit;
+                    return credit;
                 case "Asset":
                     return credit;
             }

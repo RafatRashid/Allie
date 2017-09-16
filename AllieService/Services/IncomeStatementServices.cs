@@ -27,9 +27,19 @@ namespace AllieService.Services
             return accessor.Get(id);
         }
 
+        public IncomeStatement Get(DateTime start, DateTime end)
+        {
+            return accessor.Get(start, end);
+        }
+
         public IEnumerable<IncomeStatement> GetAll()
         {
             return accessor.GetAll();
+        }
+
+        public IEnumerable<IncomeStatement> GetAll(int companyId)
+        {
+            return accessor.GetAll(companyId);
         }
 
         public void Insert(IncomeStatement statement)

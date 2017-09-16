@@ -34,6 +34,7 @@
             ITransactionServices transactionServ = ServiceFactory.GetTransactionServices();
             
             List<Transaction> transactionList = (List<Transaction>)transactionServ.GetByJournal(Model.Id);
+            double totalDebit = 0, totalCredit = 0;
         }
 
         <h2>Monthly Journal For the Month of @month @Model.JournalPeriod.Year</h2>
@@ -82,11 +83,13 @@
                             {
                                 <td>@d.Amount</td>
                                     <td></td>
+                                totalDebit += d.Amount;
                             }
                             else
                             {
                                 <td></td>
                                     <td>@d.Amount</td>
+                                totalCredit += d.Amount;
                             }
                         }
                     </tr>
@@ -99,6 +102,13 @@
                     <td></td>
                 </tr>
                 }
+            <tr>
+                <td></td>
+                <td><strong>Total: </strong></td>
+                <td></td>
+                <td>@totalDebit</td>
+                <td>@totalCredit</td>
+            </tr>
         </table>
         <a href="/Company/Index">To Dashboard</a>
     </div>

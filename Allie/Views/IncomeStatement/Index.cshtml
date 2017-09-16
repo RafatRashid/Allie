@@ -1,4 +1,5 @@
-﻿
+﻿@model IEnumerable<AllieEntity.IncomeStatement>
+
 @{
     Layout = null;
 }
@@ -12,7 +13,58 @@
 </head>
 <body>
     <div align="center">
-        okkay man!.
+        <h2>Recorded Income Statements</h2>
+        <table class="table" width="75%" align="center">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Start)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.End)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Total)
+                </th>
+                <th>Actions</th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Start)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.End)
+                    </td>
+                    <td>
+                        @{
+                            if (item.Total > 0)
+                            {
+                                <label style="color: green">@item.Total (Profit)</label>
+                            }
+                            else
+                            {
+                                <label style="color: red">@item.Total (Loss)</label>
+                            }
+                        }
+                    </td>
+                    <td>
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    </td>
+                </tr>
+                            }
+
+        </table>
+        @Html.ActionLink("To Dashboard", "Index", "Company")
+        @Html.ActionLink("Generate new income statement", "Create")
     </div>
 </body>
 </html>

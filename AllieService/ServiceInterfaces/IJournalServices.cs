@@ -10,6 +10,7 @@ namespace AllieService.ServiceInterfaces
     public interface IJournalServices
     {
         IEnumerable<Journal> GetAll();
+        IEnumerable<Journal> GetAll(int companyId);
         Journal Get(int id);
         Journal Get(int companyId, DateTime period);
         Journal GetByLedger(int ledgerId);

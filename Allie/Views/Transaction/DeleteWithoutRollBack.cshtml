@@ -1,4 +1,7 @@
-﻿
+﻿@model IEnumerable<int>
+@using AllieEntity
+@using AllieService
+@using AllieService.ServiceInterfaces
 @{
     Layout = null;
 }
@@ -12,7 +15,14 @@
 </head>
 <body>
     <div align="center">
-        Transactions deleted but accounts remain inconsistent.
+        Transactions deleted but the following accounts remain inconsistent:<br/>
+        @{ 
+            IAccountServices service = ServiceFactory.GetAccountServices();
+            foreach(int id in Model)
+            {
+                <label style="color: red">service.Get(id).AccountDescription</label>
+            }
+        }
         <a href="/Company/Index">Back to Dashboard</a>
     </div>
 </body>

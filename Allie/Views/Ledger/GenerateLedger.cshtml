@@ -31,8 +31,11 @@
                     IAccountServices accServ = ServiceFactory.GetAccountServices();
                 }
                 <h3>Ledger based on Journal @jour.JournalDescription</h3><br/>
-                <i>Form month of @month  @led.LedgerPeriod.Year</i><hr/><br/>
+                <i>Form month of @month  @led.LedgerPeriod.Year</i><br />
+                Ledger Description: &nbsp; <textarea cols="50" rows="2" name="Description"></textarea>
+                <hr/><br/>
                 <input type="hidden" name="JournalId" value="@jour.Id" />
+
 
                 @foreach(Account account in accList)
                 {

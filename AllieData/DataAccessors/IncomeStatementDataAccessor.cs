@@ -28,9 +28,22 @@ namespace AllieData.DataAccessors
             return context.IncomeStatements.SingleOrDefault(x => x.Id == id);
         }
 
+        public IncomeStatement Get(DateTime start, DateTime end)
+        {
+            return context.IncomeStatements.SingleOrDefault(x => x.Start.Month == start.Month &&
+                                                               x.Start.Year == start.Year &&
+                                                               x.End.Month == end.Month &&
+                                                               x.End.Year == end.Year );
+        }
+
         public IEnumerable<IncomeStatement> GetAll()
         {
             return context.IncomeStatements.ToList();
+        }
+
+        public IEnumerable<IncomeStatement> GetAll(int companyId)
+        {
+            return context.IncomeStatements.Where(x=>x.CompanyId == companyId).ToList();
         }
 
         public void Insert(IncomeStatement statement)

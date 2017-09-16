@@ -84,6 +84,5 @@ namespace Allie.Controllers
         {
             return ServiceFactory.GetAccountServices().Get(accId).Amount;
         }
-        
     }
 }

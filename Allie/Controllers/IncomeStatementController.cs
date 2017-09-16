@@ -14,7 +14,7 @@ namespace Allie.Controllers
         // GET: IncomeStatement
         public ActionResult Index()
         {
-            return View();
+            return View(ServiceFactory.GetIncomeStatementServices().GetAll((int)Session["CompanyId"]));
         }
 
         [HttpGet]
@@ -56,6 +56,29 @@ namespace Allie.Controllers
 
             Session["Statement"] = null;
             Session["transactionList"] = null;
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public ActionResult Details(int id)
+        {
+            IncomeStatement statement =  ServiceFactory.GetIncomeStatementServices().Get(id);
+            List<Transaction> transactionList = (List<Transaction>)ServiceFactory.GetTransactionServices().GetAllByPeriodInterval
+                                                            ((int)Session["CompanyId"], statement.Start, statement.End);
+            Session["transactionList"] = transactionList;
+
+            return View(statement);
+        }
+
+        [HttpGet]
+        public ActionResult Delete(int id)
+        {
+            return View(ServiceFactory.GetIncomeStatementServices().Get(id));
+        }
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeleteConfirm(int id)
+        {
+            ServiceFactory.GetIncomeStatementServices().Delete(id);
             return RedirectToAction("Index");
         }
     }

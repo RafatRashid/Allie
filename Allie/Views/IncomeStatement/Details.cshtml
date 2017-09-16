@@ -1,6 +1,7 @@
-﻿@using AllieService
-@using AllieEntity
+﻿@using AllieEntity
+@using AllieService
 @using AllieService.ServiceInterfaces
+@model IncomeStatement
 @{
     Layout = null;
 }
@@ -10,12 +11,11 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>GenerateIncomeStatement</title>
+    <title>Income Statement Detail</title>
 </head>
 <body>
-    <div align="center"> 
+    <div align="center">
         @{
-            IncomeStatement statement = (IncomeStatement)Session["Statement"];
             List<Transaction> transactionList = (List<Transaction>)Session["transactionList"];
 
             AccountType incomeType = ServiceFactory.GetAccountTypeServices().Get("Income");
@@ -25,18 +25,13 @@
             ITransactionDetailServices service = ServiceFactory.GetTransactionDetailServices();
             IAccountServices accService = ServiceFactory.GetAccountServices();
 
-            string startmonth = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.MonthNames[statement.Start.Month-1];
-            string endmonth = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.MonthNames[statement.End.Month-1];
+            string startmonth = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.MonthNames[Model.Start.Month - 1];
+            string endmonth = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.MonthNames[Model.End.Month - 1];
         }
         <table>
             <tr>
                 <td align="center">
-                    @{ 
-                        string companyName = ServiceFactory.GetCompanyServices().Get((int)Session["CompanyId"]).CompanyName;
-                    }
-                    @companyName<br/>
-                    Income Statement<br/>
-                    from @startmonth @statement.Start.Year to @endmonth @statement.End.Year
+                    @Model.Description
                 </td>
             </tr>
         </table>
@@ -47,7 +42,7 @@
                 <td></td>
                 <td></td>
             </tr>
-            
+
             @{
                 double revBalance = 0;
                 foreach (Transaction t in transactionList)
@@ -85,12 +80,12 @@
                     foreach (TransactionDetail d in detail)
                     {
                         Account a = accService.Get(d.AccountId);
-                    <tr>
-                        <td></td>
-                        <td>@t.TransactionDescription for account @a.AccountDescription</td>
-                        <td>@d.Amount</td>
-                        <td></td>
-                    </tr>
+                        <tr>
+                            <td></td>
+                            <td>@t.TransactionDescription for account @a.AccountDescription</td>
+                            <td>@d.Amount</td>
+                            <td></td>
+                        </tr>
                         expBalance += d.Amount;
                     }
                 }
@@ -106,25 +101,21 @@
                     <td></td>
                     <td></td>
                     <td>
-                        @if(balance > 0)
+                        @if (balance > 0)
                         {
-                            <label style="color: green">@balance (Profit)</label>
+                            <label style="color: green">@balance</label>
                         }
                         @if (balance < 0)
                         {
-                            <label style="color: red">@balance (Loss)</label>
+                            <label style="color: red">@balance</label>
                         }
                     </td>
                 </tr>
-             }
+            }
         </table>
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
-
-            <input type="hidden" name="Description" value="@companyName Income Statement from @startmonth @statement.Start.Year to @endmonth @statement.End.Year">
-            <input type="hidden" name="total" value="@balance">
-            <input type="submit" value="save income statement"/>
+        @Html.ActionLink("Back to List", "Index")
+        @{ 
+            Session["transactionList"] = null;
         }
     </div>
 </body>

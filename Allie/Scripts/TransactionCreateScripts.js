@@ -20,10 +20,12 @@
             },
             function (data, status) {
                 $('#SourceAcc_Amount').attr("max", data);
-                $('#SourceAcc_Amount').attr("value", data);
+                
+                $('#SourceAcc_Amount').val(data);
 
                 $('#DestAcc_Amount').attr("max", data);
-                $('#DestAcc_Amount').attr("value", data);
+                
+                $('#DestAcc_Amount').val(data);
             }
         );
         

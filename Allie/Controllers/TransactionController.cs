@@ -80,9 +80,16 @@ namespace Allie.Controllers
             ServiceFactory.GetTransactionDetailServices().Insert(destDetail);
 
             ServiceFactory.GetAccountServices().CashOut(sourceDetail.AccountId, sourceDetail.Amount);
-            ServiceFactory.GetAccountServices().CashIn(destDetail.AccountId, destDetail.Amount);
 
-            return RedirectToAction("Index", "Company");
+            int id = ServiceFactory.GetAccountServices().Get(destDetail.AccountId).AccountType;
+            string type = ServiceFactory.GetAccountTypeServices().Get(id).Type;
+
+            if(type == "Liability")
+                ServiceFactory.GetAccountServices().CashOut(destDetail.AccountId, destDetail.Amount);
+            else 
+                ServiceFactory.GetAccountServices().CashIn(destDetail.AccountId, destDetail.Amount);
+
+            return RedirectToAction("Index");
         }
         
         [HttpGet]
@@ -162,7 +169,7 @@ namespace Allie.Controllers
         }
 
         [HttpGet]
-        public ActionResult AddTransaction(int id)
+        public ActionResult AddTransactionInternal(int id)
         {
             Transaction t = ServiceFactory.GetTransactionServices().Get(id);
             List<Account> accList = (List<Account>)ServiceFactory.GetAccountServices().GetAll((int)Session["CompanyId"]);
@@ -188,8 +195,38 @@ namespace Allie.Controllers
             ViewBag.Transaction = t;
             return View();
         }
+
+        [HttpGet]
+        public ActionResult AddTransactionExternal(int id)
+        {
+            Transaction t = ServiceFactory.GetTransactionServices().Get(id);
+            List<Account> accList = (List<Account>)ServiceFactory.GetAccountServices().GetAll((int)Session["CompanyId"]);
+            List<SelectListItem> itemList = new List<SelectListItem>();
+
+            foreach (Account acc in accList)
+            {
+                SelectListItem item = new SelectListItem();
+                item.Text = acc.AccountDescription;
+                item.Value = acc.Id.ToString();
+
+                itemList.Add(item);
+            }
+            SelectListItem temp = new SelectListItem()
+            {
+                Text = "none",
+                Value = "none",
+            };
+            temp.Selected = true;
+            itemList.Add(temp);
+
+            ViewBag.SelectList = itemList;
+            ViewBag.Transaction = t;
+            return View();
+        }
+
+
         [HttpPost]
-        public ActionResult AddTransaction(FormCollection form)
+        public ActionResult AddTransactionInternal(FormCollection form)
         {
             Transaction transaction = ServiceFactory.GetTransactionServices().Get(Convert.ToInt32(form["TransactionId"]));
             double amount = Convert.ToDouble(form["SourceAcc_Amount"]);
@@ -215,8 +252,42 @@ namespace Allie.Controllers
 
             ServiceFactory.GetAccountServices().CashOut(sourceDetail.AccountId, sourceDetail.Amount);
             ServiceFactory.GetAccountServices().CashIn(destDetail.AccountId, destDetail.Amount);
-            
-            return RedirectToAction("Details", new { id = transaction.Id});
+
+            return RedirectToAction("Details", new { id = transaction.Id });
+        }
+
+        [HttpPost]
+        public ActionResult AddTransactionExternal(FormCollection Form)
+        {
+            Transaction transaction = ServiceFactory.GetTransactionServices().Get(Convert.ToInt32(Form["transactionId"]));
+            TransactionDetail account1 = new TransactionDetail();
+            TransactionDetail account2 = new TransactionDetail();
+
+            double amount = Convert.ToDouble(Form["Amount"]);
+            transaction.TransactionAmount += amount;
+
+            ServiceFactory.GetTransactionServices().Update(transaction);
+
+            if (Form["Account_1"] != "none")
+            {
+                account1.AccountId = Convert.ToInt32(Form["Account_1"]);
+                account1.Amount = amount;
+                account1.TransactionId = transaction.Id;
+                account1.TransactionType = ServiceFactory.GetTransactionTypeServices().Get(Form["Account_1_TransactionType"]).Id;
+                ServiceFactory.GetTransactionDetailServices().Insert(account1);
+                ServiceFactory.GetAccountServices().CashIn(account1.AccountId, account1.Amount);
+            }
+            if (Form["Account_2"] != "none")
+            {
+                account2.AccountId = Convert.ToInt32(Form["Account_2"]);
+                account2.Amount = amount;
+                account2.TransactionId = transaction.Id;
+                account2.TransactionType = ServiceFactory.GetTransactionTypeServices().Get(Form["Account_2_TransactionType"]).Id;
+                ServiceFactory.GetTransactionDetailServices().Insert(account2);
+                ServiceFactory.GetAccountServices().CashIn(account2.AccountId, account2.Amount);
+            }
+
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -231,6 +302,8 @@ namespace Allie.Controllers
         public ActionResult DeleteWithRollBack(int id)
         {
             Transaction transaction = ServiceFactory.GetTransactionServices().Get(id);
+            if (transaction.JournalId != 0)
+                ServiceFactory.GetJournalServices().Delete(transaction.JournalId);
 
             IAccountServices accService = ServiceFactory.GetAccountServices();
             ITransactionTypeServices tTypeService = ServiceFactory.GetTransactionTypeServices();
@@ -264,13 +337,19 @@ namespace Allie.Controllers
             ITransactionDetailServices detailService = ServiceFactory.GetTransactionDetailServices();
 
             Transaction t = transactionService.Get(id);
+            if (t.JournalId != 0)
+                ServiceFactory.GetJournalServices().Delete(t.JournalId);
+
             List<TransactionDetail> detail = (List<TransactionDetail>)detailService.GetAll(t.Id);
+            List<int> accId = new List<int>();
 
             foreach (TransactionDetail d in detail)
+            {
+                accId.Add(d.AccountId);
                 detailService.Delete(d.Id);
-
+            }
             transactionService.Delete(t.Id);
-            return View();
+            return View(accId);
         }
 
         [HttpGet]

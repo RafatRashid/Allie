@@ -1,7 +1,9 @@
 ﻿@{
     Layout = null;
 }
-
+@using AllieEntity
+@using AllieService
+@using AllieService.ServiceInterfaces
 <!DOCTYPE html>
 
 <html>
@@ -10,41 +12,30 @@
     <title>Create</title>
 </head>
 <body>
-    <div align-="center"> 
+    <div align="center"> 
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
 
             <table>
                 <tr>
-                    <td>Ledger Description</td>
-                    <td><textarea cols="50" rows="2" name="Description"></textarea></td>
+                    @{ 
+                        List<Journal> jList = (List<Journal>)ServiceFactory.GetJournalServices().GetAll((int)Session["CompanyId"]);
+                        string[] months = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.MonthNames;
+                    }
                 </tr>
                 <tr>
-                    <td>Select Month</td>
-                    <td>
-                        <select name="Month">
-                            @{
-                                string[] months = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.MonthNames;
-                            }
-                            @for (int i = 0; i < 12; i++)
-                            {
-                                <option name="@months[i]" value="@i">@months[i]</option>
-                            }
-                        </select>
-                    </td>
-                    <td></td>
+                    <td>Generate ledger from journals</td>
                 </tr>
                 <tr>
                     <td>
-                        <select name="Year">
-                            @for (int i = 2015; i <= 2020; i++)
+                        <select name="id">
+                            @foreach (Journal j in jList)
                             {
-                                <option name="@i" value="@i">@i</option>
+                                <option value="@j.Id">@j.JournalDescription for month @months[j.JournalPeriod.Month-1] @j.JournalPeriod.Year</option>
                             }
                         </select>
                     </td>
-                    <td></td>
                 </tr>
                 <tr><td><input type="submit" value="Generate Journal with transactions of the selected month" /></td></tr>
             </table>

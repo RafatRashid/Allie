@@ -1,72 +1,73 @@
 ﻿@model AllieEntity.Account
 @using AllieService
+
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/MainLayout.cshtml";
 }
+@section title{Create}
+    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="~/Scripts/CreateAccountValidations.js"></script>
 
-<!DOCTYPE html>
+<div align="center" class="container-fluid">
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Create</title>
-</head>
-<body>
-    @using (Html.BeginForm()) 
+    @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
-        
+
         <div class="form-horizontal">
             <h4>Create new Account</h4>
             <hr />
             @ViewBag.Error
             <div class="form-group">
                 AccountNumber
-                <div class="col-md-10">
-                    <input type="text" name="AccountNumber" value="" />
+                <div class="form-inline">
+                    <input class="form-control" type="text" name="AccountNumber" value="" id="AccNumber" /><label style="color:red">*</label>
+                    <p id="AccountNumberError" hidden></p>
                 </div>
             </div>
-    
+
             <div class="form-group">
-                AccountDescription
-                <div class="col-md-10">
-                    <textarea rows="3" cols="40" name="AccountDescription"></textarea>    
+                AccountName
+                <div class="form-inline">
+                    <textarea class="form-control" rows="3" cols="40" name="AccountDescription" id="AccName"></textarea><label style="color:red">*</label>
+                    <p id="AccountNameError" hidden></p>
                 </div>
             </div>
-    
+
             <div class="form-group">
                 Amount
-                <div class="col-md-10">
-                    <input type="text" name="Amount" value="0" />
+                <div class="form-inline">
+                    <input class="form-control" type="number" name="Amount" value="0" id="AccAmount" /><label style="color:red">*</label>
+                    <p id="AmountError" hidden></p>
                 </div>
             </div>
-    
+
             <div class="form-group">
                 AccountType
-                <div class="col-md-10">
-                    <select name="AccountType">
+                <div class="form-inline">
+                    <select class="form-control" name="AccountType">
                         @using AllieEntity
-                        @{ 
+                        @{
                             List<AccountType> list = (List<AccountType>)ServiceFactory.GetAccountTypeServices().GetAll();
                         }
-                        @foreach(AccountType acc in list)
+                        @foreach (AccountType acc in list)
                         {
                             <option name="@acc.Type" value="@acc.Id">@acc.Type</option>
                         }
                     </select>
                 </div>
             </div>
-    
+
             <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
+                <div class="form-inline">
+                    <input type="submit" class="btn btn-default" value="Create" id="submit" disabled />
                 </div>
             </div>
         </div>
-    }
-    
-    <div>
-        @Html.ActionLink("Back to List", "Index")
+                            }
+    <div align="center">
+        @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class="btn btn-success"})
     </div>
-</body>
-</html>
+
+</div>
+

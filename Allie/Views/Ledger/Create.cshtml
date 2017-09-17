@@ -1,46 +1,40 @@
-﻿@{
-    Layout = null;
-}
-@using AllieEntity
+﻿@using AllieEntity
 @using AllieService
 @using AllieService.ServiceInterfaces
-<!DOCTYPE html>
+@{
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+}
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Create</title>
-</head>
-<body>
-    <div align="center"> 
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
+@section title{create}
 
-            <table>
-                <tr>
-                    @{ 
-                        List<Journal> jList = (List<Journal>)ServiceFactory.GetJournalServices().GetAll((int)Session["CompanyId"]);
-                        string[] months = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.MonthNames;
-                    }
-                </tr>
-                <tr>
-                    <td>Generate ledger from journals</td>
-                </tr>
-                <tr>
-                    <td>
-                        <select name="id">
-                            @foreach (Journal j in jList)
-                            {
-                                <option value="@j.Id">@j.JournalDescription for month @months[j.JournalPeriod.Month-1] @j.JournalPeriod.Year</option>
-                            }
-                        </select>
-                    </td>
-                </tr>
-                <tr><td><input type="submit" value="Generate Journal with transactions of the selected month" /></td></tr>
-            </table>
+<div align="center"> 
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
 
-        }
-    </div>
-</body>
-</html>
+        <table>
+            <tr>
+                @{ 
+                    List<Journal> jList = (List<Journal>)ServiceFactory.GetJournalServices().GetAll((int)Session["CompanyId"]);
+                    string[] months = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.MonthNames;
+                }
+            </tr>
+            <tr>
+                <td>Generate ledger from journals</td>
+            </tr>
+            <tr>
+                <td class="form-inline">
+                    <select name="id" class="form-control">
+                        @foreach (Journal j in jList)
+                        {
+                            <option value="@j.Id">@j.JournalDescription for month @months[j.JournalPeriod.Month-1] @j.JournalPeriod.Year</option>
+                        }
+                    </select>
+                </td>
+            </tr>
+            <tr><td><input class="btn btn-danger" type="submit" value="Generate Ledger for the selected journal" /> &nbsp;
+                @Html.ActionLink("Back to List", "Index")<br /></td></tr>
+        </table>
+
+    }
+</div>

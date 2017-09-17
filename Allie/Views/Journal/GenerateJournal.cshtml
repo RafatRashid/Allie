@@ -3,30 +3,24 @@
 @using AllieService
 @using AllieService.ServiceInterfaces
 
+
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/MainLayout.cshtml";
 }
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Generate Journal</title>
-</head>
-<body>
+@section title{Generate Journal}
+<div class="container" align="center">
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
         Journal journal = (Journal)Session["Journal"];
-        string month = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.MonthNames[journal.JournalPeriod.Month-1];
-        
+        string month = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.MonthNames[journal.JournalPeriod.Month - 1];
+
         <div align="center">
             <h2>Monthly Journal For the Month of @month @journal.JournalPeriod.Year</h2>
             <table>
-                <tr>
+                <tr class="form-inline" class="form-control">
                     <td>Journal Description</td>
-                    <td><textarea cols="50" rows="2" name="Description">@journal.JournalDescription</textarea></td>
+                    <td><textarea readonly cols="50" rows="2" name="Description">@journal.JournalDescription</textarea></td>
                 </tr>
             </table>
             @{
@@ -37,7 +31,7 @@
                 double totalDebit = 0, totalCredit = 0;
             }
             <br /><hr />
-            <table border="1" width="50%">
+            <table class="table table-striped">
                 <tr>
                     <th>Date</th>
                     <th>Account Descriptions</th>
@@ -85,15 +79,15 @@
                                 }
                             }
                         </tr>
-                        }
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        }
+                                }
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                }
                 <tr>
                     <td></td>
                     <td><strong>Total: </strong></td>
@@ -103,8 +97,13 @@
                 </tr>
             </table>
             <hr />
-            <input type="submit" value="Save Journal" />
+            <input class="btn btn-success" type="submit" value="Save Journal" />
+            <br />
+            <br />
         </div>
-    }
-</body>
-</html>
+        
+                                }
+    <a href="/Company/Index"><i class="glyphicon glyphicon-dashboard"></i>To Dashboard</a>
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "glyphicon glyphicon-plus" })
+    <br /><br />
+</div>

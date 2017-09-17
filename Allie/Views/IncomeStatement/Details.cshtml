@@ -3,120 +3,112 @@
 @using AllieService.ServiceInterfaces
 @model IncomeStatement
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/MainLayout.cshtml";
 }
+@section title{Income Statement Detail}
 
-<!DOCTYPE html>
+<div align="center" class="container">
+    @{
+        List<Transaction> transactionList = (List<Transaction>)Session["transactionList"];
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Income Statement Detail</title>
-</head>
-<body>
-    <div align="center">
+        AccountType incomeType = ServiceFactory.GetAccountTypeServices().Get("Income");
+        AccountType expenseType = ServiceFactory.GetAccountTypeServices().Get("Expense");
+
+        List<TransactionDetail> detailList = new List<TransactionDetail>();
+        ITransactionDetailServices service = ServiceFactory.GetTransactionDetailServices();
+        IAccountServices accService = ServiceFactory.GetAccountServices();
+
+        string startmonth = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.MonthNames[Model.Start.Month - 1];
+        string endmonth = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.MonthNames[Model.End.Month - 1];
+    }
+    <table>
+        <tr>
+            <td align="center">
+                <h2>@Model.Description</h2>
+            </td>
+        </tr>
+    </table>
+    <hr />
+    <table class="table table-striped table-bordered">
+        <tr>
+            <td align="left">Revenue</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+
         @{
-            List<Transaction> transactionList = (List<Transaction>)Session["transactionList"];
+            double revBalance = 0;
+            foreach (Transaction t in transactionList)
+            {
 
-            AccountType incomeType = ServiceFactory.GetAccountTypeServices().Get("Income");
-            AccountType expenseType = ServiceFactory.GetAccountTypeServices().Get("Expense");
-
-            List<TransactionDetail> detailList = new List<TransactionDetail>();
-            ITransactionDetailServices service = ServiceFactory.GetTransactionDetailServices();
-            IAccountServices accService = ServiceFactory.GetAccountServices();
-
-            string startmonth = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.MonthNames[Model.Start.Month - 1];
-            string endmonth = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.MonthNames[Model.End.Month - 1];
-        }
-        <table>
+                List<TransactionDetail> detail = (List<TransactionDetail>)service.GetByAccount_IncomeType(incomeType.Id, t.Id);
+                foreach (TransactionDetail d in detail)
+                {
+                    Account a = accService.Get(d.AccountId);
+                    <tr>
+                        <td></td>
+                        <td>@t.TransactionDescription for account @a.AccountDescription</td>
+                        <td>@d.Amount</td>
+                        <td></td>
+                    </tr>
+                    revBalance += d.Amount;
+                }
+            }
             <tr>
-                <td align="center">
-                    @Model.Description
+                <td></td>
+                <td><strong><i>Total Revenue: </i></strong></td>
+                <td></td>
+                <td>@revBalance</td>
+            </tr>
+            <tr>
+                <td align="left">Expense</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            double expBalance = 0;
+            foreach (Transaction t in transactionList)
+            {
+                List<TransactionDetail> detail = (List<TransactionDetail>)service.GetByAccount_ExpenseType(expenseType.Id, t.Id);
+                foreach (TransactionDetail d in detail)
+                {
+                    Account a = accService.Get(d.AccountId);
+                    <tr>
+                        <td></td>
+                        <td>@t.TransactionDescription for account @a.AccountDescription</td>
+                        <td>@d.Amount</td>
+                        <td></td>
+                    </tr>
+                    expBalance += d.Amount;
+                }
+            }
+            <tr>
+                <td></td>
+                <td><strong><i>Total Expense: </i></strong></td>
+                <td></td>
+                <td>@expBalance</td>
+            </tr>
+            double balance = revBalance - expBalance;
+            <tr>
+                <td align="left">Net Income</td>
+                <td></td>
+                <td></td>
+                <td>
+                    @if (balance > 0)
+                    {
+                        <label style="color: green">@balance</label>
+                    }
+                    @if (balance < 0)
+                    {
+                        <label style="color: red">@balance</label>
+                    }
                 </td>
             </tr>
-        </table>
-        <table>
-            <tr>
-                <td align="left">Revenue</td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-
-            @{
-                double revBalance = 0;
-                foreach (Transaction t in transactionList)
-                {
-
-                    List<TransactionDetail> detail = (List<TransactionDetail>)service.GetByAccount_IncomeType(incomeType.Id, t.Id);
-                    foreach (TransactionDetail d in detail)
-                    {
-                        Account a = accService.Get(d.AccountId);
-                        <tr>
-                            <td></td>
-                            <td>@t.TransactionDescription for account @a.AccountDescription</td>
-                            <td>@d.Amount</td>
-                            <td></td>
-                        </tr>
-                        revBalance += d.Amount;
-                    }
-                }
-                <tr>
-                    <td></td>
-                    <td><strong><i>Total Revenue: </i></strong></td>
-                    <td></td>
-                    <td>@revBalance</td>
-                </tr>
-                <tr>
-                    <td align="left">Expense</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                double expBalance = 0;
-                foreach (Transaction t in transactionList)
-                {
-                    List<TransactionDetail> detail = (List<TransactionDetail>)service.GetByAccount_ExpenseType(expenseType.Id, t.Id);
-                    foreach (TransactionDetail d in detail)
-                    {
-                        Account a = accService.Get(d.AccountId);
-                        <tr>
-                            <td></td>
-                            <td>@t.TransactionDescription for account @a.AccountDescription</td>
-                            <td>@d.Amount</td>
-                            <td></td>
-                        </tr>
-                        expBalance += d.Amount;
-                    }
-                }
-                <tr>
-                    <td></td>
-                    <td><strong><i>Total Expense: </i></strong></td>
-                    <td></td>
-                    <td>@expBalance</td>
-                </tr>
-                double balance = revBalance - expBalance;
-                <tr>
-                    <td align="left">Net Income</td>
-                    <td></td>
-                    <td></td>
-                    <td>
-                        @if (balance > 0)
-                        {
-                            <label style="color: green">@balance</label>
-                        }
-                        @if (balance < 0)
-                        {
-                            <label style="color: red">@balance</label>
-                        }
-                    </td>
-                </tr>
-            }
-        </table>
-        @Html.ActionLink("Back to List", "Index")
-        @{ 
-            Session["transactionList"] = null;
         }
-    </div>
-</body>
-</html>
+    </table>
+    @Html.ActionLink("Back to List", "Index")
+    @{ 
+        Session["transactionList"] = null;
+    }
+</div>

@@ -167,129 +167,7 @@ namespace Allie.Controllers
         {
             return ServiceFactory.GetTransactionTypeServices().Get(accId, source).Type;
         }
-
-        [HttpGet]
-        public ActionResult AddTransactionInternal(int id)
-        {
-            Transaction t = ServiceFactory.GetTransactionServices().Get(id);
-            List<Account> accList = (List<Account>)ServiceFactory.GetAccountServices().GetAll((int)Session["CompanyId"]);
-            List<SelectListItem> itemList = new List<SelectListItem>();
-
-            foreach (Account acc in accList)
-            {
-                SelectListItem item = new SelectListItem();
-                item.Text = acc.AccountDescription;
-                item.Value = acc.Id.ToString();
-
-                itemList.Add(item);
-            }
-            SelectListItem temp = new SelectListItem()
-            {
-                Text = "none",
-                Value = "none",
-            };
-            temp.Selected = true;
-            itemList.Add(temp);
-
-            ViewBag.SelectList = itemList;
-            ViewBag.Transaction = t;
-            return View();
-        }
-
-        [HttpGet]
-        public ActionResult AddTransactionExternal(int id)
-        {
-            Transaction t = ServiceFactory.GetTransactionServices().Get(id);
-            List<Account> accList = (List<Account>)ServiceFactory.GetAccountServices().GetAll((int)Session["CompanyId"]);
-            List<SelectListItem> itemList = new List<SelectListItem>();
-
-            foreach (Account acc in accList)
-            {
-                SelectListItem item = new SelectListItem();
-                item.Text = acc.AccountDescription;
-                item.Value = acc.Id.ToString();
-
-                itemList.Add(item);
-            }
-            SelectListItem temp = new SelectListItem()
-            {
-                Text = "none",
-                Value = "none",
-            };
-            temp.Selected = true;
-            itemList.Add(temp);
-
-            ViewBag.SelectList = itemList;
-            ViewBag.Transaction = t;
-            return View();
-        }
-
-
-        [HttpPost]
-        public ActionResult AddTransactionInternal(FormCollection form)
-        {
-            Transaction transaction = ServiceFactory.GetTransactionServices().Get(Convert.ToInt32(form["TransactionId"]));
-            double amount = Convert.ToDouble(form["SourceAcc_Amount"]);
-            transaction.TransactionAmount += amount;
-
-            ServiceFactory.GetTransactionServices().Update(transaction);
-
-            TransactionDetail sourceDetail = new TransactionDetail();
-            TransactionDetail destDetail = new TransactionDetail();
-
-            sourceDetail.AccountId = Convert.ToInt32(form["SourceAcc_Account"]);
-            sourceDetail.Amount = amount;
-            sourceDetail.TransactionId = transaction.Id;
-            sourceDetail.TransactionType = ServiceFactory.GetTransactionTypeServices().Get(form["SourceAcc_TransactionType"]).Id;
-
-            destDetail.AccountId = Convert.ToInt32(form["DestAcc_Account"]);
-            destDetail.Amount = amount;
-            destDetail.TransactionId = transaction.Id;
-            destDetail.TransactionType = ServiceFactory.GetTransactionTypeServices().Get(form["DestAcc_TransactionType"]).Id;
-
-            ServiceFactory.GetTransactionDetailServices().Insert(sourceDetail);
-            ServiceFactory.GetTransactionDetailServices().Insert(destDetail);
-
-            ServiceFactory.GetAccountServices().CashOut(sourceDetail.AccountId, sourceDetail.Amount);
-            ServiceFactory.GetAccountServices().CashIn(destDetail.AccountId, destDetail.Amount);
-
-            return RedirectToAction("Details", new { id = transaction.Id });
-        }
-
-        [HttpPost]
-        public ActionResult AddTransactionExternal(FormCollection Form)
-        {
-            Transaction transaction = ServiceFactory.GetTransactionServices().Get(Convert.ToInt32(Form["transactionId"]));
-            TransactionDetail account1 = new TransactionDetail();
-            TransactionDetail account2 = new TransactionDetail();
-
-            double amount = Convert.ToDouble(Form["Amount"]);
-            transaction.TransactionAmount += amount;
-
-            ServiceFactory.GetTransactionServices().Update(transaction);
-
-            if (Form["Account_1"] != "none")
-            {
-                account1.AccountId = Convert.ToInt32(Form["Account_1"]);
-                account1.Amount = amount;
-                account1.TransactionId = transaction.Id;
-                account1.TransactionType = ServiceFactory.GetTransactionTypeServices().Get(Form["Account_1_TransactionType"]).Id;
-                ServiceFactory.GetTransactionDetailServices().Insert(account1);
-                ServiceFactory.GetAccountServices().CashIn(account1.AccountId, account1.Amount);
-            }
-            if (Form["Account_2"] != "none")
-            {
-                account2.AccountId = Convert.ToInt32(Form["Account_2"]);
-                account2.Amount = amount;
-                account2.TransactionId = transaction.Id;
-                account2.TransactionType = ServiceFactory.GetTransactionTypeServices().Get(Form["Account_2_TransactionType"]).Id;
-                ServiceFactory.GetTransactionDetailServices().Insert(account2);
-                ServiceFactory.GetAccountServices().CashIn(account2.AccountId, account2.Amount);
-            }
-
-            return RedirectToAction("Index");
-        }
-
+        
         [HttpGet]
         public ActionResult Delete(int id)
         {
@@ -360,11 +238,6 @@ namespace Allie.Controllers
         [HttpPost]
         public ActionResult Edit(Transaction transaction)
         {
-            Transaction previous = ServiceFactory.GetTransactionServices().Get(transaction.Id);
-            transaction.CompanyId = previous.CompanyId;
-            transaction.JournalId = previous.JournalId;
-            transaction.TransactionAmount = previous.TransactionAmount;
-
             if (ValidateTransaction.IsValid(transaction))
             {
                 ServiceFactory.GetTransactionServices().Update(transaction);

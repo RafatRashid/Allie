@@ -1,17 +1,14 @@
 ﻿@model AllieEntity.Journal
 
+
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/MainLayout.cshtml";
 }
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Edit Journal</title>
-</head>
-<body>
+@section title{Edit Journal}
+    
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+<script src="~/Scripts/JournalCreate.js"></script>
+<div>
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
@@ -19,15 +16,20 @@
             @ViewBag.error
             <table>
                 <tr>
-                    <td>Journal Description</td>
-                    <td><textarea cols="50" rows="2" name="JournalDescription">@Model.JournalDescription</textarea></td>
+                    <td>Journal Description &nbsp;</td>
+                    <td class="form-inline">
+                        <textarea class="form-control" cols="50" rows="2" id="Description" name="JournalDescription">@Model.JournalDescription</textarea>
+                        <label style="color: red">*</label><br />
+                        <p hidden id="descError"></p>
+                        <p> </p>
+                    </td>
                 </tr>
                 <tr>
-                    <td colspan="2" align="center"><input type="submit" value="Save changes" /></td>
+                    <td colspan="2" align="center"><input class="btn btn-danger" type="submit" id="submit" value="Save changes" />
+                    @Html.ActionLink("Back to List", "Index", null, new { @class="btn btn-danger"})</td>
                 </tr>
             </table>
-            @Html.ActionLink("Back to List", "Index")
+            
         </div>
     }
-</body>
-</html>
+</div>

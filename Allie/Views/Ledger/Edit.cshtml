@@ -1,17 +1,11 @@
 ﻿@model AllieEntity.Ledger
 
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/MainLayout.cshtml";
 }
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Edit</title>
-</head>
-<body>
+<script src="~/Scripts/LedgerEdit.js"></script>
+@section title{Edit}
+<div class="container">
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
@@ -20,14 +14,15 @@
             <table>
                 <tr>
                     <td>Ledger Description</td>
-                    <td><textarea cols="50" rows="2" name="LedgerDescription">@Model.LedgerDescription</textarea></td>
+                    <td><textarea id="desc" cols="50" rows="2" name="LedgerDescription">@Model.LedgerDescription</textarea><label style="color:red">*</label>
+                    <p id="error"></p></td>
                 </tr>
                 <tr>
-                    <td colspan="2" align="center"><input type="submit" value="Save changes" /></td>
+                    <td colspan="2" align="center"><input class="btn btn-default" type="submit" value="Save changes" /></td>
                 </tr>
             </table><br />
             @Html.ActionLink("Back to List", "Index")
         </div>
     }
-</body>
-</html>
+</div>
+    

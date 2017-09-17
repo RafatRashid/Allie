@@ -4,21 +4,53 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <link href="~/Contents/bootstrap.css" rel="stylesheet" />
+    <script src="~/Scripts/LogValidate.js"></script>
+
     <title>Log In</title>
 </head>
 <body>
-    <div align="center">z
+    <div align="center">
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">Allie</a>
+                </div>
+            </div>
+        </nav>
 
-        <form action="Index" method="post">
+        <form method="post" class="form-inline" >
             @Html.AntiForgeryToken()
-
-            UserMail: <input type="text" name="UserMail" />&nbsp; 
-            <br />
-            Password: <input type="password" name="Password" />&nbsp; 
-            <br />
-            <input type="submit" value="Log In" />
-
+            <table>
+                <tr style="margin-bottom: 10px">
+                    <td>
+                        UserMail
+                    </td>
+                    <td>
+                        <input id="email" class="form-control" type="text" name="UserMail" />
+                        <p id="mailError" hidden></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Password
+                    </td>
+                    <td>
+                        <input class="form-control" type="password" name="Password" id="Password" />
+                        <p id="error" hidden></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input class="btn btn-primary" type="submit" id="submit" value="Log In" />
+                    </td>
+                </tr>
+            </table>
         </form>
+        <label style="color:red">@ViewBag.ErrorMessage</label>
+        <a href="/Home/Index">Home</a>
     </div>
 </body>
 </html>

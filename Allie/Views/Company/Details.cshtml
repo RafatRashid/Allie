@@ -1,0 +1,82 @@
+﻿@model AllieEntity.Company
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div align="center">
+        <h4>Company</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.CompanyName)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.CompanyName)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Location)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Location)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Phone)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Phone)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Mail)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Mail)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.TotalRevenue)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.TotalRevenue)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.TotalExpense)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.TotalExpense)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Profit)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Profit)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back", "Details")
+    </p>
+</body>
+</html>

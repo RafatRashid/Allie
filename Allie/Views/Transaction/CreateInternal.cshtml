@@ -1,76 +1,80 @@
 ﻿
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/MainLayout.cshtml";
 }
-
-<!DOCTYPE html>
-
-<html>
-<head>
+@section title{CreateInternalTransaction}
     <script src="~/Scripts/jquery-3.1.1.intellisense.js"></script>
     <script src="~/Scripts/jquery-3.1.1.min.js"></script>
     <script src="~/Scripts/TransactionCreateScripts.js"></script>
-    <meta name="viewport" content="width=device-width" />
-    <title>CreateInternalTransaction</title>
-</head>
-<body>
-    <div align="center">
-        <h2>Enter Transaction Details</h2><hr/>
-        <div id="internaltransactionDetailDiv">
-            @using (Html.BeginForm())
-            {
-                @Html.AntiForgeryToken()
+    
+<div align="center" class="container">
+    <h2>Enter Transaction Details</h2><hr/>
+    <div id="internaltransactionDetailDiv">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
-                <table>
-                    <tr>
-                        <td>Transaction Date</td>
-                        <td><input type="date" name="TransactionDate" value="" /></td>
-                    </tr>
-                    <tr>
-                        <td>Transaction Description</td>
-                        <td><textarea rows="2" cols="50" name="Description"></textarea></td>
-                    </tr>
-                </table>
-                <table width="40%">
-                    <tr>
-                        @*left part*@
-                        <td>
-                            Source Account<hr />
-                            Select Account<br />
-                            @Html.DropDownList("SourceAcc_Account", (List<SelectListItem>)ViewBag.SelectList)
-                            <br />
+            <table>
+                <tr>
+                    <td>Transaction Date</td>
+                    <td class="form-inline">
+                        <input style="padding-bottom: 10px" class="form-control" type="date" name="TransactionDate" id="TransactionDate" value="" />
+                        <label style="color: red">*</label><br />
+                        <p> </p>
+                        <p hidden id="dateError" ></p>
+                    </td>
+                </tr>
+                
+                <tr style="margin-bottom: 10px">
+                    <td>Transaction Description</td>
+                    <td class="form-inline">
+                        <textarea class="form-control" rows="2" cols="50" name="Description" id="Description"></textarea>
+                        <label style="color: red">*</label><br />
+                        <p> </p>
+                        <p hidden id="descError"></p>
+                    </td>
+                </tr>
+            </table>
+            <table width="50%">
+                <tr style="margin-bottom: 10px">
+                    @*left part*@
+                    <td class="form-inline">
+                        Source Account<hr />
+                        Select Account<br />
+                        @Html.DropDownList("SourceAcc_Account", (List<SelectListItem>)ViewBag.SelectList, htmlAttributes: new { @class = "form-control" })
+                        <br />
 
-                            Amount<br />
-                            <input type="number" name="SourceAcc_Amount" id="SourceAcc_Amount" min="0" value="" /><br />
+                        Amount<br />
+                        <input class="form-control" type="number" name="SourceAcc_Amount" id="SourceAcc_Amount" min="0" value="" /><br />
 
-                            Transaction <br />
-                            <input type="text" name="SourceAcc_TransactionType" id="SourceAcc_TransactionType" value="" readonly />
-                        </td>
-                        @*right part*@
-                        <td>
-                            Destination Account<hr />
-                            Select Account<br />
-                            @Html.DropDownList("DestAcc_Account", (List<SelectListItem>)ViewBag.SelectList)
-                            <br />
+                        Transaction <br />
+                        <input class="form-control" type="text" name="SourceAcc_TransactionType" id="SourceAcc_TransactionType" value="" readonly />
+                        <p> </p>
+                    </td>
+                    @*right part*@
+                    <td class="form-inline">
+                        Destination Account<hr />
+                        Select Account<br />
+                        @Html.DropDownList("DestAcc_Account", (List<SelectListItem>)ViewBag.SelectList, htmlAttributes: new { @class = "form-control" })
+                        <br />
 
-                            Amount<br />
-                            <input type="number" name="DestAcc_Amount" id="DestAcc_Amount" min="0" value="" readonly /><br />
+                        Amount<br />
+                        <input class="form-control" type="number" name="DestAcc_Amount" id="DestAcc_Amount" min="0" value="" readonly /><br />
 
-                            Transaction <br />
-                            <input type="text" name="DestAcc_TransactionType" id="DestAcc_TransactionType" value="" readonly />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" align="center"><input type="submit" id="submit" value="Confirm Transaction" disabled=""/></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" align="center"><p id="okay">Please select 2  accounts of different transaction type</p></td>
-                    </tr>
-                </table>
-            }
-            <a href="/Company/Index">To Dasboard</a>
+                        Transaction <br />
+                        <input class="form-control" type="text" name="DestAcc_TransactionType" id="DestAcc_TransactionType" value="" readonly />
+                        <p> </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center"><input class="btn btn-primary" type="submit" id="submit" value="Confirm Transaction" disabled=""/></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center"><p id="okay">Please select 2  accounts of different transaction type</p></td>
+                </tr>
+            </table>
+        }
+        <a href="/Company/Index"><i class="glyphicon glyphicon-dashboard"></i>To Dasboard</a>
             
-        </div>
     </div>
-</body>
-</html>
+</div>

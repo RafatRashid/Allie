@@ -2,18 +2,14 @@
 @using AllieService
 @using AllieService.ServiceInterfaces
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/MainLayout.cshtml";
 }
 
-<!DOCTYPE html>
+@section title{generate Ledger}
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+<script src="~/Scripts/TransactionEdit.js"></script>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>GenerateLedger</title>
-</head>
-<body>
-    <div align="center">
+<div align="center" class="container">
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
@@ -32,7 +28,8 @@
                 }
                 <h3>Ledger based on Journal @jour.JournalDescription</h3><br/>
                 <i>Form month of @month  @led.LedgerPeriod.Year</i><br />
-                Ledger Description: &nbsp; <textarea cols="50" rows="2" name="Description"></textarea>
+                Ledger Description: &nbsp; <textarea cols="50" rows="2" name="Description" id="Description"></textarea><label style="color: red">*</label><br />
+                <p hidden id="descError"></p>
                 <hr/><br/>
                 <input type="hidden" name="JournalId" value="@jour.Id" />
 
@@ -41,7 +38,7 @@
                 {
                     double balance = 0;
                     <i>Account: @account.AccountDescription</i><br />
-                    <table border="1">
+                    <table class="table table-striped table-bordered">
                         <tr>
                             <th>Date</th>
                             <th>Description</th>
@@ -98,12 +95,10 @@
                     <br /><hr />
                     
                 }
-                <br /><input type="submit" value="Save Ledger" /><br /><br />
+                <br /><input type="submit" class="btn btn-danger" value="Save Ledger" id="submit" disabled /><br /><br />
             </div>
             
             }
         @Html.ActionLink("Back to List", "Index") |
-        @Html.ActionLink("To dashboard", "Index", "Company")
+        @Html.ActionLink("To dashboard", "Index", "Company")<br /><br /><br />
     </div>
-</body>
-</html>

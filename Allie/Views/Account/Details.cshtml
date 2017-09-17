@@ -1,66 +1,52 @@
 ﻿@model AllieEntity.Account
 
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/MainLayout.cshtml";
 }
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Details</title>
-</head>
-<body>
-    <div>
-        <h4>Account</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.AccountNumber)
-            </dt>
+@section title{Account Details}
+<div class="container-fluid" align="center">
+    <h4>Account</h4>
+    <hr />
+    <dl>
+        <dt>
+            @Html.DisplayNameFor(model => model.AccountNumber)
+        </dt>
     
-            <dd>
-                @Html.DisplayFor(model => model.AccountNumber)
-            </dd>
+        <dd>
+            @Html.DisplayFor(model => model.AccountNumber)
+        </dd>
     
-            <dt>
-                @Html.DisplayNameFor(model => model.AccountDescription)
-            </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.AccountDescription)
+        </dt>
     
-            <dd>
-                @Html.DisplayFor(model => model.AccountDescription)
-            </dd>
+        <dd>
+            @Html.DisplayFor(model => model.AccountDescription)
+        </dd>
     
-            <dt>
-                @Html.DisplayNameFor(model => model.Amount)
-            </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.Amount)
+        </dt>
     
-            <dd>
-                @Html.DisplayFor(model => model.Amount)
-            </dd>
+        <dd>
+            @Html.DisplayFor(model => model.Amount)
+        </dd>
     
-            <dt>
-                @Html.DisplayNameFor(model => model.AccountType)
-            </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.AccountType)
+        </dt>
     
-            <dd>
-                @Html.DisplayFor(model => model.AccountType)
-            </dd>
+        <dd>
+            @using AllieService
+            @{ 
+                string type = ServiceFactory.GetAccountTypeServices().Get(Model.AccountType).Type;
+            }
+            @type
+        </dd>
     
-            <dt>
-                @Html.DisplayNameFor(model => model.CompanyId)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.CompanyId)
-            </dd>
-    
-        </dl>
-    </div>
+    </dl>
     <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-        @Html.ActionLink("Back to List", "Index")
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, htmlAttributes: new { @class="btn btn-success"}) 
+        @Html.ActionLink("Account List", "Index", null, htmlAttributes: new { @class = "btn btn-success" })
     </p>
-</body>
-</html>
+</div>

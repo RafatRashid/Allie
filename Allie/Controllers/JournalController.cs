@@ -15,7 +15,7 @@ namespace Allie.Controllers
         // GET: Journal
         public ActionResult Index()
         {
-            return View(ServiceFactory.GetJournalServices().GetAll());
+            return View(ServiceFactory.GetJournalServices().GetAll((int)Session["CompanyId"]));
         }
 
         [HttpGet]
@@ -28,7 +28,10 @@ namespace Allie.Controllers
         {
             Journal journal = new Journal();
             journal.JournalDescription= Form["Description"];
-            journal.JournalPeriod = new DateTime(Convert.ToInt32(Form["Year"]), Convert.ToInt32(Form["Month"])+1, 1);
+            string temp = Form["Period"];
+            string[] booyah = temp.Split('-');
+
+            journal.JournalPeriod = new DateTime(Convert.ToInt32(booyah[1]), Convert.ToInt32(booyah[0])+1, 1);
             journal.CompanyId = (int)Session["CompanyId"];
 
             Session["Journal"] = journal;

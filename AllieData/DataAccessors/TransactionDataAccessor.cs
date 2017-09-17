@@ -59,6 +59,17 @@ namespace AllieData.DataAccessors
             return context.Transactions.Where(x => x.JournalId == journalId).ToList();
         }
 
+        public IEnumerable<DateTime> GetDistinctDates()
+        {
+            //return context.Transactions.Select(x => x.TransactionDate).Distinct().ToList();
+            List<DateTime> DistinctYearMonths = context.Transactions
+                                .Select(p => new { p.TransactionDate.Year, p.TransactionDate.Month })
+                                .Distinct()
+                                .ToList()
+                                .Select(x => new DateTime(x.Year, x.Month, 1)).ToList();
+            return DistinctYearMonths;
+        }
+
         public void Insert(Transaction tran)
         {
             context.Transactions.Add(tran);
@@ -68,9 +79,7 @@ namespace AllieData.DataAccessors
         public void Update(Transaction tran)
         {
             Transaction t = context.Transactions.SingleOrDefault(x => x.Id == tran.Id);
-
-            t.TransactionAmount = tran.TransactionAmount;
-            t.TransactionDate = tran.TransactionDate;
+            
             t.TransactionDescription = tran.TransactionDescription;
             t.JournalId = tran.JournalId;
 

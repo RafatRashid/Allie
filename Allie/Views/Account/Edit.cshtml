@@ -1,51 +1,50 @@
 ﻿@model AllieEntity.Account
 
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/MainLayout.cshtml";
 }
+@section title{Edit}
+    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="~/Scripts/EditAccountValidation.js"></script>
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Edit</title>
-</head>
-<body>
+<div align="center" class="container">
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
-        
+
         <div class="form-horizontal">
             <h4>Edit Account</h4>
             <hr />
             @ViewBag.Error
-    
+
             <div class="form-group">
                 AccountNumber
-                <div class="col-md-10">
-                    <input type="text" name="AccountNumber" value="@Model.AccountNumber" />
+                <div class="form-inline">
+                    <input class="form-control" type="text" name="AccountNumber" id="AccNumber" value="@Model.AccountNumber" /><label style="color:red">*</label>
+                    <p id="AccountNumberError" hidden></p>
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-inline">
                 AccountDescription
-                <div class="col-md-10">
-                    <textarea rows="3" cols="40" name="AccountDescription">@Model.AccountDescription</textarea>
+                <div class="form-inline">
+                    <textarea class="form-control" rows="3" cols="40" name="AccountDescription" id="AccName">@Model.AccountDescription</textarea><label style="color:red">*</label>
+                    <p id="AccountNameError" hidden></p>
                 </div>
             </div>
 
             <div class="form-group">
                 Amount
-                <div class="col-md-10">
-                    <input type="text" name="Amount" value="@Model.Amount" />
+                <div class="form-inline">
+                    <input class="form-control" type="text" name="Amount" value="@Model.Amount" id="AccAmount" /><label style="color:red">*</label>
+                    <p id="AmountError" hidden></p>
                 </div>
             </div>
 
             <div class="form-group">
                 AccountType
-                <div class="col-md-10">
-                    <select name="AccountType">
+                <div class="form-inline">
+                    <select class="form-control" name="AccountType">
                         @using AllieEntity
                         @using AllieService
                         @{
@@ -65,17 +64,13 @@
                     </select>
                 </div>
             </div>
-    
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Save" class="btn btn-default" />
+
+            <div class="form-group" align="center">
+                <div class="form-inline">
+                    <input type="submit" value="Save" class="btn btn-success" id="submit" />
+                    <a href="/Account/Index" class="btn btn-warning">Account List</a>
                 </div>
             </div>
         </div>
-    }
-    
-    <div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>
-</body>
-</html>
+                            }
+</div>

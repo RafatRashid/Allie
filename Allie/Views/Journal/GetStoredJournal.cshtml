@@ -4,35 +4,30 @@
 @using AllieService.ServiceInterfaces
 
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/MainLayout.cshtml";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
-    <script src="~/Scripts/GetStoredJournalScripts.js"></script>
-    <title>Journal</title>
-</head>
-<body>
+@section title{Journal}
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+<script src="~/Scripts/GetStoredJournalScripts.js"></script>
+    
+<div class="container" align="center">
     @{
 
         string month = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.MonthNames[Model.JournalPeriod.Month - 1];
     }
-    <div align="center" id="inputdiv"> 
+    <div align="center" id="inputdiv">
         <label>The journal for the month of @month  @Model.JournalPeriod.Year already exists.</label><br />
-        <button id="view">View Journal</button>
+        <button class="btn btn-primary" id="view">View Journal</button>
     </div>
 
     <div id="outputdiv" align="center" hidden>
-        @{ 
+        @{
             IAccountServices accServ = ServiceFactory.GetAccountServices();
             ITransactionTypeServices ttypeServ = ServiceFactory.GetTransactionTypeServices();
             ITransactionDetailServices detailServ = ServiceFactory.GetTransactionDetailServices();
             ITransactionServices transactionServ = ServiceFactory.GetTransactionServices();
-            
+
             List<Transaction> transactionList = (List<Transaction>)transactionServ.GetByJournal(Model.Id);
             double totalDebit = 0, totalCredit = 0;
         }
@@ -40,12 +35,12 @@
         <h2>Monthly Journal For the Month of @month @Model.JournalPeriod.Year</h2>
         <table>
             <tr>
-                <td>Journal Description</td>
-                <td><label>@Model.JournalDescription</label></td>
+                <td>Journal Description &nbsp</td>
+                <td><label >@Model.JournalDescription</label></td>
             </tr>
         </table>
         <br /><hr />
-        <table border="1" width="50%">
+        <table class="table table-striped">
             <tr>
                 <th>Date</th>
                 <th>Account Descriptions</th>
@@ -62,7 +57,7 @@
                 {
                     <tr>
                         @if (i == 0)
-                        {
+                    {
                             <td>@t.TransactionDate.ToShortDateString()</td>
                             i++;
                         }
@@ -82,26 +77,26 @@
                             if (type == "Debit")
                             {
                                 <td>@d.Amount</td>
-                                    <td></td>
+                                <td></td>
                                 totalDebit += d.Amount;
                             }
                             else
                             {
                                 <td></td>
-                                    <td>@d.Amount</td>
+                                <td>@d.Amount</td>
                                 totalCredit += d.Amount;
                             }
                         }
                     </tr>
-                }
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                }
+                            }
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            }
             <tr>
                 <td></td>
                 <td><strong>Total: </strong></td>
@@ -110,7 +105,6 @@
                 <td>@totalCredit</td>
             </tr>
         </table>
-        <a href="/Company/Index">To Dashboard</a>
+        <a href="/Company/Index" class="btn btn-default">To Dashboard</a><br /><br />
     </div>
-</body>
-</html>
+</div>

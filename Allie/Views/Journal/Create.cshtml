@@ -1,56 +1,55 @@
-﻿
+﻿@using AllieEntity
+@using AllieService
+@using AllieService.ServiceInterfaces
+
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/MainLayout.cshtml";
 }
+@section title{Generate Ledger}
 
-<!DOCTYPE html>
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+<script src="~/Scripts/JournalCreate.js"></script>
+    
+<div align="center"class="container">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Generate Ledger</title>
-</head>
-<body>
-    <div align="center">
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
-
-            <table>
-                <tr>
-                    <td>Journal Description</td>
-                    <td><textarea cols="50" rows="2" name="Description"></textarea></td>
-                </tr>
-                <tr>
-                    <td>Select Month</td>
-                    <td>
-                        <select name="Month">
-                            @{
-                                string[] months = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.MonthNames;
-                            }
-                            @for (int i = 0; i < 12; i++)
+        <table>
+            <tr>
+                <td>Journal Description</td>
+                <td class="form-inline">
+                    <textarea class="form-control" cols="50" rows="2" name="Description" id="Description"></textarea>
+                    <label style="color: red">*</label><br />
+                    <p hidden id="descError"></p>
+                    <p> </p>
+                </td>
+            </tr>
+            <tr>
+                <td>Select Month</td>
+                <td class="form-inline">
+                    <select name="Period" class="form-control">
+                        @{
+                            string[] months = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.MonthNames;
+                            List<DateTime> transactionDateList = (List<DateTime>)ServiceFactory.GetTransactionServices().GetDistinctDates();
+                                
+                            foreach (DateTime date in transactionDateList)
                             {
-                                <option name="@months[i]" value="@i">@months[i]</option>
+                                string d = string.Format("{0}-{1}", date.Month-1, date.Year);
+                                <option value="@d">@months[date.Month-1] of @date.Year</option>
                             }
-                        </select>
-                    </td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>
-                        <select name="Year">
-                            @for (int i = 2015; i <= 2020; i++)
-                            {
-                                <option name="@i" value="@i">@i</option>
-                            }
-                        </select>
-                    </td>
-                    <td></td>
-                </tr>
-                <tr><td><input type="submit"  value="Generate journal for the selected period" /></td></tr>
-            </table>
+                        }
+                    </select>
+                    <p> </p>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="submit" class="btn btn-success" id="submit" value="Generate journal for the selected period" disabled/>
+                    <a href="/Journal/Index" class="btn btn-success">Journal List</a>
+                </td>
+            </tr>
+        </table>
             
-        }
-    </div>
-</body>
-</html>
+    }
+</div> 

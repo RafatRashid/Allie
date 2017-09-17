@@ -12,13 +12,9 @@ namespace Allie.Controllers
         {
             base.OnActionExecuting(filterContext);
 
-            // setting a dummy company id in the session for the time being. this will be set during log in
-            // for differentiating between company account, transaction, ledger etc. 5 is the only company's id
-            // that is present in the database...
-            Session["CompanyId"] = 1;   
-
-            //if (Session["loggedIn"] == null)
-            //    Response.Redirect("/Login/Index");
+            if (Session["loggedIn"] == null || (string)Session["UserType"] != "Owner")
+                Response.Redirect("/Login/Index");
+            
         }
     }
 }

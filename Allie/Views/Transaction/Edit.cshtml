@@ -1,50 +1,37 @@
 ﻿@model AllieEntity.Transaction
 
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/MainLayout.cshtml";
 }
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Edit</title>
-</head>
-<body>
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
+@section title{Edit}
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+<script src="~/Scripts/TransactionEdit.js"></script>
+    
+<div align="center" class="container">
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
         
-        <div class="form-horizontal">
-            <h4>Edit Transaction</h4>
-            <hr />
-            @ViewBag.Error
+    <div class="form-horizontal">
+        <h4 class="h4">Edit Transaction</h4>
+        <hr />
+        @ViewBag.Error
     
-            <div class="form-group">
-                Transaction Description
-                <div class="col-md-10">
-                    <textarea cols="50" rows="2" name="TransactionDescription">@Model.TransactionDescription</textarea>
-                </div>
-            </div>
-    
-            <div class="form-group">
-                Transaction Date
-                <div class="col-md-10">
-                    <input type="date" name="TransactionDate" value="@Model.TransactionDate.ToString("yyyy-MM-dd")" />
-                </div>
-            </div>
-    
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Save" class="btn btn-default" />
-                </div>
+        <div class="form-group">
+            Transaction Description
+            <div class="form-inline">
+                <textarea class="form-control" cols="50" rows="2" id="Description" name="TransactionDescription">@Model.TransactionDescription</textarea>
+                <label style="color: red">*</label><br />
+                <p hidden id="descError"></p>
             </div>
         </div>
-    }
-    
-    <div>
-        @Html.ActionLink("Back to List", "Index")
+
+        <div class="form-group">
+            <div class="form-inline">
+                <input type="submit" id="submit" value="Save" class="btn btn-default"/>
+                @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class="btn btn-default"})
+            </div>
+        </div>
     </div>
-</body>
-</html>
+}
+</div>

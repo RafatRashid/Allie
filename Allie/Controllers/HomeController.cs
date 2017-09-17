@@ -40,6 +40,7 @@ namespace Allie.Controllers
             }
             else
             {
+                ViewBag.Error = null;
                 ViewBag.Error = ValidateCompany.Message;
                 return View();
             }
@@ -67,6 +68,7 @@ namespace Allie.Controllers
             }
             else
             {
+                ViewBag.Error = null;
                 ViewBag.Error = ValidateUser.Message;
                 return View();
             }

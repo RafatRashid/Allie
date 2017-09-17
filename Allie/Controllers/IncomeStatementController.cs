@@ -54,6 +54,9 @@ namespace Allie.Controllers
 
             ServiceFactory.GetIncomeStatementServices().Insert(statement);
 
+            Company c = ServiceFactory.GetCompanyServices().Get((int)Session["CompanyId"]);
+            ServiceFactory.GetCompanyServices().Update(c);
+
             Session["Statement"] = null;
             Session["transactionList"] = null;
             return RedirectToAction("Index");

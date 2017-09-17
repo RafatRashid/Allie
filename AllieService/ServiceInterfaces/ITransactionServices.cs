@@ -11,6 +11,7 @@ namespace AllieService.ServiceInterfaces
     {
         IEnumerable<Transaction> GetAll();
         IEnumerable<Transaction> GetAll(int companyId);
+        IEnumerable<DateTime> GetDistinctDates();
         IEnumerable<Transaction> GetAll(int companyId, DateTime period);
         IEnumerable<Transaction> GetAllByPeriodInterval(int companyId, DateTime startPeriod, DateTime endPeriod);
         IEnumerable<Transaction> GetByJournal(int journalId);

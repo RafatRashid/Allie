@@ -38,6 +38,9 @@ namespace AllieData.DataAccessors
             c.Location = company.Location;
             c.Mail = company.Mail;
             c.Phone = company.Phone;
+            c.TotalRevenue = company.TotalRevenue;
+            c.TotalExpense = company.TotalExpense;
+            c.Profit = company.Profit;
 
             context.SaveChanges();
         }

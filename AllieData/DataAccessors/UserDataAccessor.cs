@@ -16,7 +16,7 @@ namespace AllieData.DataAccessors
         {
             this.context = context;
         }
-        
+
         public void Delete(int id)
         {
             User u = context.Users.SingleOrDefault(x => x.UserId == id);
@@ -24,14 +24,27 @@ namespace AllieData.DataAccessors
             context.SaveChanges();
         }
 
+
+        public User Get(string username, string password)
+        {
+            return context.Users.SingleOrDefault(u => u.Email == username && u.Password == password);
+        }
+
         public User Get(int id)
         {
-            return context.Users.SingleOrDefault(x => x.UserId == id);
+            return context.Users.SingleOrDefault(u => u.UserId == id);
         }
 
         public IEnumerable<User> GetAll()
         {
             return context.Users.ToList();
+
+        }
+        public IEnumerable<User> GetAll(string str, int companyId)
+        {
+            IEnumerable<User> list = context.Users.Where(x => x.UserName.StartsWith(str) || str == null).ToList();
+            Console.WriteLine(str);
+            return list;
         }
 
         public void Insert(User user)
@@ -56,8 +69,12 @@ namespace AllieData.DataAccessors
         {
             User u = context.Users.SingleOrDefault(x => x.UserId == id);
             u.Password = password;
-
             context.SaveChanges();
+        }
+
+        public IEnumerable<User> GetCompanyUsers(int companyId)
+        {
+            return context.Users.Where(user => user.CompanyId == companyId);
         }
     }
 }

@@ -52,6 +52,11 @@ namespace AllieService.Services
             return accessor.GetByJournal(journalId);
         }
 
+        public IEnumerable<DateTime> GetDistinctDates()
+        {
+            return accessor.GetDistinctDates();
+        }
+
         public void Insert(Transaction tran)
         {
             accessor.Insert(tran);

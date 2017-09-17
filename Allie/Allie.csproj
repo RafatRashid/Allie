@@ -94,17 +94,39 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Contents\bootstrap-theme.css" />
+    <Content Include="Contents\bootstrap-theme.min.css" />
+    <Content Include="Contents\bootstrap.css" />
+    <Content Include="Contents\bootstrap.min.css" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Contents\bootstrap-theme.css.map" />
+    <Content Include="Contents\bootstrap-theme.min.css.map" />
+    <Content Include="Contents\bootstrap.css.map" />
+    <Content Include="Contents\bootstrap.min.css.map" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
-    <Content Include="Scripts\ExternalTransactionScript.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\CreateAccountValidations.js" />
+    <Content Include="Scripts\EditAccountValidation.js" />
+    <Content Include="Scripts\CreateExternalTransaction.js" />
     <Content Include="Scripts\GetStoredJournalScripts.js" />
+    <Content Include="Scripts\JournalCreate.js" />
+    <Content Include="Scripts\LedgerEdit.js" />
+    <Content Include="Scripts\LogValidate.js" />
     <Content Include="Scripts\TransactionCreateScripts.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
+    <Content Include="Scripts\TransactionEdit.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminBaseController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -143,7 +165,6 @@
     <Content Include="Views\Transaction\CreateInternal.cshtml" />
     <Content Include="Views\Transaction\Index.cshtml" />
     <Content Include="Views\Transaction\Details.cshtml" />
-    <Content Include="Views\Transaction\AddTransactionInternal.cshtml" />
     <Content Include="Views\Transaction\Delete.cshtml" />
     <Content Include="Views\Transaction\DeleteWithRollBack.cshtml" />
     <Content Include="Views\Transaction\DeleteWithoutRollBack.cshtml" />
@@ -169,7 +190,18 @@
     <Content Include="Views\IncomeStatement\Index.cshtml" />
     <Content Include="Views\IncomeStatement\Details.cshtml" />
     <Content Include="Views\IncomeStatement\Delete.cshtml" />
-    <Content Include="Views\Transaction\AddTransactionExternal.cshtml" />
+    <Content Include="Views\Admin\Delete.cshtml" />
+    <Content Include="Views\Admin\Details.cshtml" />
+    <Content Include="Views\Admin\Edit.cshtml" />
+    <Content Include="Views\Admin\EditUser.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Company\Details.cshtml" />
+    <Content Include="Views\Company\Edit.cshtml" />
+    <Content Include="Views\Company\UserProfile.cshtml" />
+    <Content Include="Views\Company\EditProfile.cshtml" />
+    <Content Include="Views\Company\ChangePassword.cshtml" />
+    <Content Include="Views\Company\ShowConfirmation.cshtml" />
+    <Content Include="Views\Shared\MainLayout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -179,6 +211,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\AdminBase\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>

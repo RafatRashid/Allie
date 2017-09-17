@@ -3,71 +3,62 @@
 @using AllieService
 
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/MainLayout.cshtml";
 }
+@section title{Delete}
 
-<!DOCTYPE html>
+<div align="center">
+    <h2>Transaction Details</h2>
+    <hr />
+    <dl>
+        @{
+            Transaction transaction = (Transaction)ViewBag.Transaction;
+        }
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Delete</title>
-</head>
-<body>
-    <div align="center">
-        <h2>Transaction Details</h2>
-        <hr />
-        <dl class="dl-horizontal">
-            @{
-                Transaction transaction = (Transaction)ViewBag.Transaction;
-            }
+        <dt>
+            Transaction Date
+        </dt>
 
-            <dt>
-                Transaction Date
-            </dt>
+        <dd>
+            @transaction.TransactionDate.ToShortDateString()
+        </dd>
 
-            <dd>
-                @transaction.TransactionDate.ToShortDateString()
-            </dd>
+        <dt>
+            Transaction Description
+        </dt>
 
-            <dt>
-                Transaction Description
-            </dt>
+        <dd>
+            @transaction.TransactionDescription
+        </dd>
 
-            <dd>
-                @transaction.TransactionDescription
-            </dd>
+        <dt>
+            Total transacted amount
+        </dt>
 
-            <dt>
-                Total transacted amount
-            </dt>
-
-            <dd>
-                @transaction.TransactionAmount
-            </dd>
-        </dl>
-        <h4>Concerned Accounts:</h4>
-        <table width="25%">
-            @foreach (TransactionDetail item in Model)
-            {
-                <tr>
-                    <td>Account Description</td>
-                    <td>@ServiceFactory.GetAccountServices().Get(item.AccountId).AccountDescription</td>
-                </tr>
-                <tr>
-                    <td>Transaction Type</td>
-                    <td>@ServiceFactory.GetTransactionTypeServices().Get(item.TransactionType).Type</td>
-                </tr>
-                <tr>
-                    <td>Transacted Amount</td>
-                    <td>@item.Amount</td>
-                </tr>
-                <tr><td colspan="2"><hr /></td></tr>
-            }
-        </table>
-        @Html.ActionLink("Back to List", "Index") |
-        @Html.ActionLink("Return concerned accounts to their previous state?", "DeleteWithRollBack", new { id = transaction.Id })
-        @Html.ActionLink("Manually manage accounts later", "DeleteWithoutRollBack", new { id = transaction.Id })
-    </div>
-</body>
-</html>
+        <dd>
+            @transaction.TransactionAmount
+        </dd>
+    </dl>
+    <h4>Concerned Accounts:</h4>
+    <table width="25%">
+        @foreach (TransactionDetail item in Model)
+        {
+            <tr>
+                <td>Account Description</td>
+                <td>@ServiceFactory.GetAccountServices().Get(item.AccountId).AccountDescription</td>
+            </tr>
+            <tr>
+                <td>Transaction Type</td>
+                <td>@ServiceFactory.GetTransactionTypeServices().Get(item.TransactionType).Type</td>
+            </tr>
+            <tr>
+                <td>Transacted Amount</td>
+                <td>@item.Amount</td>
+            </tr>
+            <tr><td colspan="2"><hr /></td></tr>
+        }
+    </table>
+    @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-success" }) 
+    @Html.ActionLink("Return concerned accounts to their previous state?", "DeleteWithRollBack", new { id = transaction.Id }, htmlAttributes: new { @class="btn btn-success"})
+    @Html.ActionLink("Manually manage accounts later", "DeleteWithoutRollBack", new { id = transaction.Id }, htmlAttributes: new { @class = "btn btn-success" })
+</div>

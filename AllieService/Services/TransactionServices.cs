@@ -52,9 +52,9 @@ namespace AllieService.Services
             return accessor.GetByJournal(journalId);
         }
 
-        public IEnumerable<DateTime> GetDistinctDates()
+        public IEnumerable<DateTime> GetDistinctDates(int companyId)
         {
-            return accessor.GetDistinctDates();
+            return accessor.GetDistinctDates(companyId);
         }
 
         public void Insert(Transaction tran)

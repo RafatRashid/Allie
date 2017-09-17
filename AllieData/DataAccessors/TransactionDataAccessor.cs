@@ -49,7 +49,7 @@ namespace AllieData.DataAccessors
 
         public IEnumerable<Transaction> GetAllByPeriodInterval(int companyId, DateTime startPeriod, DateTime endPeriod)
         {
-            return context.Transactions.Where(x => 
+            return context.Transactions.Where(x => (x.CompanyId == companyId) &&
                         (x.TransactionDate.Month >= startPeriod.Month && x.TransactionDate.Month <= endPeriod.Month) &&
                         (x.TransactionDate.Year >= startPeriod.Year && x.TransactionDate.Year <= endPeriod.Year)).ToList();
         }
@@ -59,10 +59,11 @@ namespace AllieData.DataAccessors
             return context.Transactions.Where(x => x.JournalId == journalId).ToList();
         }
 
-        public IEnumerable<DateTime> GetDistinctDates()
+        public IEnumerable<DateTime> GetDistinctDates(int companyId)
         {
-            //return context.Transactions.Select(x => x.TransactionDate).Distinct().ToList();
-            List<DateTime> DistinctYearMonths = context.Transactions
+            List<Transaction> t = context.Transactions.Where(x => x.CompanyId == companyId).ToList();
+
+            List<DateTime> DistinctYearMonths = t
                                 .Select(p => new { p.TransactionDate.Year, p.TransactionDate.Month })
                                 .Distinct()
                                 .ToList()

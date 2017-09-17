@@ -31,7 +31,7 @@
                     <select name="Period" class="form-control">
                         @{
                             string[] months = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.MonthNames;
-                            List<DateTime> transactionDateList = (List<DateTime>)ServiceFactory.GetTransactionServices().GetDistinctDates();
+                            List<DateTime> transactionDateList = (List<DateTime>)ServiceFactory.GetTransactionServices().GetDistinctDates((int)Session["CompanyId"]);
                                 
                             foreach (DateTime date in transactionDateList)
                             {
